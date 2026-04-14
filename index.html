@@ -5,953 +5,811 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>TRIBE26 — Powered by Totemian</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@300;400;600;700&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@300;400;600;700&family=Barlow:wght@300;400;500&family=Vazirmatn:wght@300;400;700&display=swap" rel="stylesheet">
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{--g:#00E87A;--gd:rgba(0,232,122,0.1);--gl:rgba(0,232,122,0.06);--go:rgba(0,232,122,0.25);--gold:#FFB800;--goldd:rgba(255,184,0,0.1);--dk:#060810;--dk2:#0d1120;--dk3:#131929;--sr:#1a2235;--br:rgba(255,255,255,0.07);--tx:#e8edf5;--mu:#6b7a99;--fa:'Bebas Neue',sans-serif;--fc:'Barlow Condensed',sans-serif;--fb:'Barlow',sans-serif;--fp:'Vazirmatn',sans-serif}
+  html{scroll-behavior:smooth}
+  body{background:var(--dk);color:var(--tx);font-family:var(--fb);font-size:16px;line-height:1.6;overflow-x:hidden}
 
-  :root {
-    --green: #00E87A;
-    --green-dim: #00b85e;
-    --gold: #FFB800;
-    --dark: #060810;
-    --dark2: #0d1120;
-    --dark3: #131929;
-    --surface: #1a2235;
-    --border: rgba(255,255,255,0.07);
-    --text: #e8edf5;
-    --muted: #6b7a99;
-    --font-display: 'Bebas Neue', sans-serif;
-    --font-cond: 'Barlow Condensed', sans-serif;
-    --font-body: 'Barlow', sans-serif;
-  }
+  nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:1.1rem 2.5rem;background:rgba(6,8,16,0.92);backdrop-filter:blur(14px);border-bottom:1px solid var(--br)}
+  .nlogo{font-family:var(--fa);font-size:1.9rem;letter-spacing:.04em;color:var(--g);text-decoration:none}
+  .nlogo span{color:var(--tx)}
+  .nlinks{display:flex;gap:1.8rem;list-style:none}
+  .nlinks a{font-family:var(--fc);font-size:.82rem;letter-spacing:.12em;text-transform:uppercase;color:var(--mu);text-decoration:none;transition:color .2s}
+  .nlinks a:hover{color:var(--g)}
+  .ncta{font-family:var(--fc);font-size:.82rem;letter-spacing:.12em;text-transform:uppercase;padding:.5rem 1.3rem;border:1px solid var(--g);color:var(--g);text-decoration:none;border-radius:2px;transition:background .2s,color .2s}
+  .ncta:hover{background:var(--g);color:var(--dk)}
 
-  html { scroll-behavior: smooth; }
+  .hero{position:relative;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:9rem 2rem 6rem;overflow:hidden;background:linear-gradient(155deg,#060c1a 0%,var(--dk) 55%,#06100d 100%)}
+  .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 55% at 50% 45%,rgba(0,232,122,.06) 0%,transparent 70%)}
+  .hbg{position:absolute;inset:0;opacity:.12;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='104'%3E%3Cpolygon points='30,2 58,17 58,47 30,62 2,47 2,17' fill='none' stroke='%2300E87A' stroke-width='0.8'/%3E%3Cpolygon points='30,62 58,77 58,107 30,122 2,107 2,77' fill='none' stroke='%2300E87A' stroke-width='0.8'/%3E%3C/svg%3E");pointer-events:none}
+  .pcbg{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+  .pchar{position:absolute;font-family:var(--fp);color:rgba(0,232,122,.055);font-size:clamp(4rem,10vw,9rem);font-weight:700;user-select:none}
+  .hbadge{display:inline-flex;align-items:center;gap:.5rem;font-family:var(--fc);font-size:.76rem;letter-spacing:.2em;text-transform:uppercase;color:var(--g);border:1px solid var(--go);background:var(--gl);padding:.4rem 1rem;border-radius:100px;margin-bottom:1.5rem;animation:fdn .8s ease both}
+  .bdot{width:6px;height:6px;border-radius:50%;background:var(--g);animation:pls 2s infinite}
+  .hpersian{font-family:var(--fp);font-size:clamp(1rem,3vw,1.4rem);color:rgba(0,232,122,.55);margin-bottom:.6rem;animation:fdn .8s .05s ease both}
+  .htitle{font-family:var(--fa);font-size:clamp(5rem,16vw,12.5rem);line-height:.88;letter-spacing:.02em;color:#fff;animation:fup .9s .1s ease both}
+  .htitle .ac{color:var(--g)}
+  .hline{font-family:var(--fc);font-size:clamp(.9rem,2.2vw,1.3rem);font-weight:300;letter-spacing:.25em;text-transform:uppercase;color:var(--mu);margin-top:1.2rem;margin-bottom:.6rem;animation:fup .9s .2s ease both}
+  .hline strong{color:var(--tx);font-weight:600}
+  .hpsub{font-family:var(--fp);font-size:.9rem;color:rgba(255,255,255,.28);margin-bottom:2.5rem;animation:fup .9s .25s ease both;direction:rtl}
+  .hacts{display:flex;gap:1rem;flex-wrap:wrap;justify-content:center;animation:fup .9s .3s ease both}
+  .scrl{position:absolute;bottom:2.5rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:.5rem;animation:fup 1s .6s ease both}
+  .scrl-ln{width:1px;height:40px;background:linear-gradient(to bottom,transparent,var(--mu));animation:sa 2s 1.5s infinite}
+  .scrl-lb{font-family:var(--fc);font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--mu)}
 
-  body {
-    background: var(--dark);
-    color: var(--text);
-    font-family: var(--font-body);
-    font-size: 16px;
-    line-height: 1.6;
-    overflow-x: hidden;
-  }
+  @keyframes pls{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.7)}}
+  @keyframes fdn{from{opacity:0;transform:translateY(-14px)}to{opacity:1;transform:translateY(0)}}
+  @keyframes fup{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+  @keyframes sa{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform:scaleY(1);transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
 
-  /* ── NAV ── */
-  nav {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 1.2rem 2.5rem;
-    background: rgba(6,8,16,0.85);
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid var(--border);
-  }
-  .nav-logo {
-    font-family: var(--font-display);
-    font-size: 2rem;
-    letter-spacing: 0.04em;
-    color: var(--green);
-    text-decoration: none;
-  }
-  .nav-logo span { color: var(--text); }
-  .nav-links { display: flex; gap: 2rem; list-style: none; }
-  .nav-links a {
-    font-family: var(--font-cond);
-    font-size: 0.95rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--muted);
-    text-decoration: none;
-    transition: color 0.2s;
-  }
-  .nav-links a:hover { color: var(--green); }
-  .nav-cta {
-    font-family: var(--font-cond);
-    font-size: 0.9rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    padding: 0.55rem 1.4rem;
-    border: 1px solid var(--green);
-    color: var(--green);
-    text-decoration: none;
-    border-radius: 2px;
-    transition: background 0.2s, color 0.2s;
-  }
-  .nav-cta:hover { background: var(--green); color: var(--dark); }
+  .btn-p{display:flex;align-items:center;gap:.6rem;font-family:var(--fc);font-size:.95rem;letter-spacing:.1em;text-transform:uppercase;font-weight:600;padding:.9rem 2rem;background:var(--g);color:var(--dk);border:none;border-radius:2px;text-decoration:none;cursor:pointer;transition:background .2s,transform .15s}
+  .btn-p:hover{background:#00ff88;transform:translateY(-1px)}
+  .btn-s{display:flex;align-items:center;gap:.6rem;font-family:var(--fc);font-size:.95rem;letter-spacing:.1em;text-transform:uppercase;font-weight:600;padding:.9rem 2rem;background:transparent;color:var(--tx);border:1px solid var(--br);border-radius:2px;text-decoration:none;cursor:pointer;transition:border-color .2s,background .2s}
+  .btn-s:hover{border-color:var(--mu);background:rgba(255,255,255,.04)}
 
-  /* ── HEX GRID BG ── */
-  .hex-bg {
-    position: absolute; inset: 0; overflow: hidden; pointer-events: none;
-    opacity: 0.18;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='104'%3E%3Cpolygon points='30,2 58,17 58,47 30,62 2,47 2,17' fill='none' stroke='%2300E87A' stroke-width='0.8'/%3E%3Cpolygon points='30,62 58,77 58,107 30,122 2,107 2,77' fill='none' stroke='%2300E87A' stroke-width='0.8'/%3E%3Cpolygon points='-30,32 -2,17 -2,47 -30,62 -58,47 -58,17' fill='none' stroke='%2300E87A' stroke-width='0.8'/%3E%3Cpolygon points='90,32 118,17 118,47 90,62 62,47 62,17' fill='none' stroke='%2300E87A' stroke-width='0.8'/%3E%3C/svg%3E");
-  }
+  .cdbar{background:var(--dk2);border-top:1px solid var(--br);border-bottom:1px solid var(--br);padding:1.8rem 2rem;display:flex;align-items:center;justify-content:center;gap:1rem;flex-wrap:wrap}
+  .cdlb{font-family:var(--fc);font-size:.76rem;letter-spacing:.2em;text-transform:uppercase;color:var(--mu);margin-right:.5rem}
+  .cdrow{display:flex;gap:1.2rem;align-items:center}
+  .cdu{text-align:center}
+  .cdnum{font-family:var(--fa);font-size:2.8rem;line-height:1;color:var(--g);min-width:2.8rem;display:block}
+  .cdlabel{font-family:var(--fc);font-size:.6rem;letter-spacing:.15em;text-transform:uppercase;color:var(--mu)}
+  .cdsep{font-family:var(--fa);font-size:2.2rem;color:var(--sr);line-height:1;margin-top:-.4rem}
+  .cdflag{margin-left:1.2rem;font-family:var(--fc);font-size:.8rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);border:1px solid rgba(255,184,0,.25);background:rgba(255,184,0,.05);padding:.35rem .9rem;border-radius:2px}
 
-  /* ── HERO ── */
-  .hero {
-    position: relative;
-    min-height: 100vh;
-    display: flex; flex-direction: column;
-    align-items: center; justify-content: center;
-    text-align: center;
-    padding: 8rem 2rem 5rem;
-    background: linear-gradient(160deg, #060c1a 0%, var(--dark) 50%, #060d10 100%);
-    overflow: hidden;
-  }
-  .hero::before {
-    content: '';
-    position: absolute; inset: 0;
-    background: radial-gradient(ellipse 70% 50% at 50% 40%, rgba(0,232,122,0.07) 0%, transparent 70%);
-  }
-  .hero-badge {
-    display: inline-flex; align-items: center; gap: 0.5rem;
-    font-family: var(--font-cond);
-    font-size: 0.8rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--green);
-    border: 1px solid rgba(0,232,122,0.3);
-    background: rgba(0,232,122,0.06);
-    padding: 0.4rem 1rem;
-    border-radius: 100px;
-    margin-bottom: 2rem;
-    animation: fadeDown 0.8s ease both;
-  }
-  .badge-dot {
-    width: 6px; height: 6px;
-    border-radius: 50%;
-    background: var(--green);
-    animation: pulse 2s infinite;
-  }
-  @keyframes pulse {
-    0%, 100% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.4; transform: scale(0.7); }
-  }
-  .hero-title {
-    font-family: var(--font-display);
-    font-size: clamp(6rem, 18vw, 14rem);
-    line-height: 0.9;
-    letter-spacing: 0.02em;
-    color: #fff;
-    animation: fadeUp 0.9s 0.1s ease both;
-  }
-  .hero-title .accent { color: var(--green); }
-  .hero-tagline {
-    font-family: var(--font-cond);
-    font-size: clamp(1rem, 2.5vw, 1.4rem);
-    font-weight: 300;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin-top: 1rem;
-    margin-bottom: 3rem;
-    animation: fadeUp 0.9s 0.2s ease both;
-  }
-  .hero-tagline strong { color: var(--text); font-weight: 600; }
-  .hero-actions {
-    display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center;
-    animation: fadeUp 0.9s 0.3s ease both;
-  }
-  .btn-primary {
-    display: flex; align-items: center; gap: 0.6rem;
-    font-family: var(--font-cond);
-    font-size: 1rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    font-weight: 600;
-    padding: 0.9rem 2.2rem;
-    background: var(--green);
-    color: var(--dark);
-    border: none;
-    border-radius: 2px;
-    text-decoration: none;
-    cursor: pointer;
-    transition: background 0.2s, transform 0.15s;
-  }
-  .btn-primary:hover { background: #00ff88; transform: translateY(-1px); }
-  .btn-secondary {
-    display: flex; align-items: center; gap: 0.6rem;
-    font-family: var(--font-cond);
-    font-size: 1rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    font-weight: 600;
-    padding: 0.9rem 2.2rem;
-    background: transparent;
-    color: var(--text);
-    border: 1px solid var(--border);
-    border-radius: 2px;
-    text-decoration: none;
-    cursor: pointer;
-    transition: border-color 0.2s, background 0.2s;
-  }
-  .btn-secondary:hover { border-color: var(--muted); background: rgba(255,255,255,0.04); }
+  .sw{background:var(--dk);padding:4rem 2rem}
+  .stats{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1px;background:var(--br);border:1px solid var(--br)}
+  .si2{background:var(--dk2);padding:2.5rem 2rem;text-align:center;position:relative;overflow:hidden}
+  .si2::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--g),transparent);opacity:0;transition:opacity .4s}
+  .si2:hover::before{opacity:1}
+  .snum{font-family:var(--fa);font-size:3.8rem;line-height:1;color:#fff}
+  .snum .sa{color:var(--g)}
+  .sunit{font-family:var(--fc);font-size:.76rem;letter-spacing:.15em;text-transform:uppercase;color:var(--mu);margin-top:.5rem}
 
-  .hero-scroll {
-    position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%);
-    display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
-    animation: fadeUp 1s 0.6s ease both;
-  }
-  .scroll-line {
-    width: 1px; height: 40px;
-    background: linear-gradient(to bottom, transparent, var(--muted));
-    animation: scrollAnim 2s 1.5s infinite;
-  }
-  @keyframes scrollAnim {
-    0% { transform: scaleY(0); transform-origin: top; }
-    50% { transform: scaleY(1); transform-origin: top; }
-    51% { transform: scaleY(1); transform-origin: bottom; }
-    100% { transform: scaleY(0); transform-origin: bottom; }
-  }
-  .scroll-label {
-    font-family: var(--font-cond);
-    font-size: 0.7rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--muted);
-  }
+  section{padding:6rem 2rem}
+  .si{max-width:1100px;margin:0 auto}
+  .slb{font-family:var(--fc);font-size:.7rem;letter-spacing:.25em;text-transform:uppercase;color:var(--g);margin-bottom:.8rem}
+  .st{font-family:var(--fa);font-size:clamp(2.2rem,5vw,4rem);line-height:.95;color:#fff;margin-bottom:1.5rem}
+  .st .dm{color:var(--mu)}
+  .sb{font-size:1rem;color:var(--mu);line-height:1.8}
+  .dv{width:50px;height:2px;background:var(--g);margin:1.5rem 0}
 
-  @keyframes fadeDown {
-    from { opacity: 0; transform: translateY(-16px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
+  .circ{background:var(--dk2);border-top:1px solid var(--br);border-bottom:1px solid var(--br)}
+  .cg{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
+  .ct p{font-size:1rem;color:var(--mu);line-height:1.8;margin-bottom:1rem}
+  .ct p strong{color:var(--tx);font-weight:500}
+  .pills{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:1.5rem}
+  .pill{font-family:var(--fc);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;padding:.3rem .75rem;border-radius:100px;border:1px solid}
+  .pg{border-color:rgba(0,232,122,.3);color:var(--g);background:var(--gl)}
+  .pgo{border-color:rgba(255,184,0,.3);color:var(--gold);background:rgba(255,184,0,.05)}
+  .pb{border-color:rgba(100,160,255,.3);color:#64a0ff;background:rgba(100,160,255,.05)}
 
-  /* ── COUNTDOWN ── */
-  .countdown-bar {
-    background: var(--dark2);
-    border-top: 1px solid var(--border);
-    border-bottom: 1px solid var(--border);
-    padding: 1.8rem 2rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 1rem;
-    flex-wrap: wrap;
-  }
-  .countdown-label {
-    font-family: var(--font-cond);
-    font-size: 0.8rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin-right: 1rem;
-  }
-  .countdown-units { display: flex; gap: 1.5rem; align-items: center; }
-  .cd-unit { text-align: center; }
-  .cd-num {
-    font-family: var(--font-display);
-    font-size: 2.8rem;
-    line-height: 1;
-    color: var(--green);
-    min-width: 3rem;
-    display: block;
-  }
-  .cd-label {
-    font-family: var(--font-cond);
-    font-size: 0.65rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--muted);
-  }
-  .cd-sep {
-    font-family: var(--font-display);
-    font-size: 2.2rem;
-    color: var(--surface);
-    line-height: 1;
-    margin-top: -0.4rem;
-  }
-  .cd-flag {
-    margin-left: 1.5rem;
-    font-family: var(--font-cond);
-    font-size: 0.85rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--gold);
-    border: 1px solid rgba(255,184,0,0.3);
-    background: rgba(255,184,0,0.06);
-    padding: 0.35rem 0.9rem;
-    border-radius: 2px;
-  }
+  .how{background:var(--dk3);border-top:1px solid var(--br);border-bottom:1px solid var(--br)}
+  .hgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.5rem;margin-top:3rem}
+  .rc{background:var(--dk2);border:1px solid var(--br);border-radius:4px;padding:2rem;position:relative;overflow:hidden;transition:border-color .3s,transform .2s}
+  .rc:hover{border-color:rgba(0,232,122,.35);transform:translateY(-3px)}
+  .rc::after{content:attr(data-n);position:absolute;top:1.2rem;right:1.2rem;font-family:var(--fa);font-size:3.5rem;color:rgba(255,255,255,.03);line-height:1}
+  .ri{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin-bottom:1.2rem}
+  .ri.g{background:var(--gd)}.ri.gold{background:var(--goldd)}.ri.b{background:rgba(100,160,255,.1)}
+  .rn{font-family:var(--fc);font-size:1.5rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:#fff;margin-bottom:.2rem}
+  .rs{font-family:var(--fc);font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;color:var(--g);margin-bottom:.8rem}
+  .rd{font-size:.91rem;color:var(--mu);line-height:1.72}
 
-  /* ── STATS ── */
-  .stats {
-    padding: 5rem 2rem;
-    max-width: 1100px;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 2px;
-    background: var(--border);
-    border: 1px solid var(--border);
-  }
-  .stat-item {
-    background: var(--dark2);
-    padding: 2.5rem 2rem;
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-  }
-  .stat-item::before {
-    content: '';
-    position: absolute; top: 0; left: 0; right: 0; height: 2px;
-    background: linear-gradient(90deg, transparent, var(--green), transparent);
-    opacity: 0;
-    transition: opacity 0.4s;
-  }
-  .stat-item:hover::before { opacity: 1; }
-  .stat-num {
-    font-family: var(--font-display);
-    font-size: 4rem;
-    line-height: 1;
-    color: #fff;
-  }
-  .stat-num .stat-accent { color: var(--green); }
-  .stat-unit {
-    font-family: var(--font-cond);
-    font-size: 0.8rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin-top: 0.5rem;
-  }
+  .soc{background:var(--dk)}
+  .s6g{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start}
+  .s6sec{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--br);border:1px solid var(--br);margin-top:2rem}
+  .s6it{background:var(--dk2);padding:1.1rem 1.2rem}
+  .s6n{font-family:var(--fa);font-size:1.2rem;color:var(--mu)}
+  .s6nm{font-family:var(--fc);font-size:.95rem;font-weight:600;letter-spacing:.06em;color:var(--tx)}
+  .s6d{font-size:.78rem;color:var(--mu);margin-top:.2rem}
+  .s6h{background:linear-gradient(135deg,rgba(0,232,122,.08),rgba(0,232,122,.03));border:1px solid rgba(0,232,122,.25) !important}
+  .s6h .s6n{color:var(--g)}.s6h .s6nm{color:var(--g)}
+  .s6q{margin-top:2rem;padding:1.5rem;border-left:2px solid var(--g);background:rgba(0,232,122,.04)}
+  .s6q p{font-size:1rem;color:var(--mu);line-height:1.8;font-style:italic}
+  .s6q p strong{color:var(--tx);font-style:normal;font-weight:500}
 
-  /* ── SECTION SHARED ── */
-  section { padding: 6rem 2rem; }
-  .section-inner { max-width: 1100px; margin: 0 auto; }
-  .section-label {
-    font-family: var(--font-cond);
-    font-size: 0.75rem;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    color: var(--green);
-    margin-bottom: 0.8rem;
-  }
-  .section-title {
-    font-family: var(--font-display);
-    font-size: clamp(2.5rem, 6vw, 4.5rem);
-    line-height: 0.95;
-    color: #fff;
-    margin-bottom: 1.5rem;
-  }
-  .section-title .dim { color: var(--muted); }
-  .section-body {
-    font-size: 1.05rem;
-    color: var(--muted);
-    max-width: 560px;
-    line-height: 1.75;
-  }
+  .psec{background:var(--dk2);border-top:1px solid var(--br);border-bottom:1px solid var(--br);position:relative;overflow:hidden}
+  .psec::before{content:'جامعه';position:absolute;right:-2rem;top:50%;transform:translateY(-50%);font-family:var(--fp);font-size:16rem;color:rgba(0,232,122,.022);font-weight:700;line-height:1;pointer-events:none}
+  .pgrid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
+  .pwords{display:flex;flex-direction:column;gap:.75rem}
+  .pw{display:flex;align-items:center;justify-content:space-between;padding:.9rem 1.2rem;background:var(--dk3);border:1px solid var(--br);border-radius:2px;gap:1.5rem}
+  .pwfa{font-family:var(--fp);font-size:1.4rem;color:var(--g);direction:rtl;flex:1;text-align:right}
+  .pwsp{color:var(--br);font-size:.8rem;flex-shrink:0}
+  .pwen{font-family:var(--fc);font-size:1rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--mu);flex:1}
+  .cflags{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1.5rem}
+  .cf{font-family:var(--fc);font-size:.7rem;letter-spacing:.1em;padding:.28rem .65rem;border:1px solid var(--br);color:var(--mu);border-radius:100px}
+  .cf.ac{border-color:rgba(0,232,122,.35);color:var(--g);background:var(--gl)}
 
-  /* ── HOW IT WORKS ── */
-  .how {
-    background: var(--dark2);
-    border-top: 1px solid var(--border);
-    border-bottom: 1px solid var(--border);
-  }
-  .how-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 1.5rem;
-    margin-top: 3.5rem;
-  }
-  .role-card {
-    background: var(--dark3);
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    padding: 2rem;
-    position: relative;
-    overflow: hidden;
-    transition: border-color 0.3s, transform 0.2s;
-  }
-  .role-card:hover { border-color: rgba(0,232,122,0.35); transform: translateY(-3px); }
-  .role-card::before {
-    content: attr(data-num);
-    position: absolute; top: 1.5rem; right: 1.5rem;
-    font-family: var(--font-display);
-    font-size: 4rem;
-    color: rgba(255,255,255,0.04);
-    line-height: 1;
-  }
-  .role-icon {
-    width: 40px; height: 40px;
-    border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    margin-bottom: 1.5rem;
-    font-size: 1.1rem;
-  }
-  .role-icon.green { background: rgba(0,232,122,0.1); color: var(--green); }
-  .role-icon.gold { background: rgba(255,184,0,0.1); color: var(--gold); }
-  .role-icon.blue { background: rgba(100,160,255,0.1); color: #64a0ff; }
-  .role-name {
-    font-family: var(--font-cond);
-    font-size: 1.6rem;
-    font-weight: 700;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    color: #fff;
-    margin-bottom: 0.3rem;
-  }
-  .role-sub {
-    font-family: var(--font-cond);
-    font-size: 0.75rem;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--green);
-    margin-bottom: 1rem;
-  }
-  .role-desc {
-    font-size: 0.95rem;
-    color: var(--muted);
-    line-height: 1.7;
-  }
+  .ndsec{background:var(--dk)}
+  .ndhead{display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:2rem;margin-bottom:2.5rem}
+  .ndgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1px;background:var(--br);border:1px solid var(--br)}
+  .ndi{background:var(--dk2);padding:1rem 1.1rem;display:flex;flex-direction:column;gap:.45rem;transition:background .2s;min-height:72px;justify-content:center}
+  .ndi:hover{background:var(--dk3)}
+  .ndi-top{display:flex;align-items:center;gap:.5rem}
+  .nt{font-family:var(--fc);font-size:.65rem;font-weight:700;letter-spacing:.08em;padding:.12rem .4rem;border-radius:2px;flex-shrink:0;line-height:1.4}
+  .taaa{background:rgba(0,232,122,.1);color:var(--g);border:1px solid rgba(0,232,122,.2)}
+  .taa{background:rgba(255,184,0,.1);color:var(--gold);border:1px solid rgba(255,184,0,.2)}
+  .ta{background:rgba(107,122,153,.08);color:var(--mu);border:1px solid rgba(107,122,153,.15)}
+  .nn{font-family:var(--fc);font-size:.88rem;font-weight:600;color:var(--tx);white-space:normal;line-height:1.3;word-break:break-word}
+  .na{font-family:var(--fc);font-size:.7rem;color:var(--mu);letter-spacing:.05em}
+  .ndmore{text-align:center;padding:1.2rem;background:var(--dk2);border:1px solid var(--br);border-top:none;font-family:var(--fc);font-size:.8rem;letter-spacing:.1em;color:var(--mu);text-transform:uppercase}
+  .ndmore strong{color:var(--g)}
 
-  /* ── NODES MAP SECTION ── */
-  .nodes-section { background: var(--dark); }
-  .nodes-header {
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 2rem;
-    margin-bottom: 3rem;
-  }
-  .nodes-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
-    gap: 1px;
-    background: var(--border);
-    border: 1px solid var(--border);
-    margin-bottom: 2rem;
-  }
-  .node-item {
-    background: var(--dark2);
-    padding: 1rem 1.2rem;
-    display: flex; align-items: center; gap: 0.75rem;
-    transition: background 0.2s;
-    cursor: default;
-  }
-  .node-item:hover { background: var(--dark3); }
-  .node-tier {
-    font-family: var(--font-cond);
-    font-size: 0.75rem;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    padding: 0.15rem 0.45rem;
-    border-radius: 2px;
-    flex-shrink: 0;
-  }
-  .tier-aaa { background: rgba(0,232,122,0.12); color: var(--green); border: 1px solid rgba(0,232,122,0.25); }
-  .tier-aa { background: rgba(255,184,0,0.1); color: var(--gold); border: 1px solid rgba(255,184,0,0.2); }
-  .tier-a { background: rgba(107,122,153,0.1); color: var(--muted); border: 1px solid rgba(107,122,153,0.2); }
-  .node-name {
-    font-family: var(--font-cond);
-    font-size: 0.88rem;
-    font-weight: 600;
-    color: var(--text);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-  .node-area {
-    font-size: 0.72rem;
-    color: var(--muted);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-  .nodes-more {
-    text-align: center;
-    padding: 1.5rem;
-    background: var(--dark2);
-    border: 1px solid var(--border);
-    border-top: none;
-    font-family: var(--font-cond);
-    font-size: 0.85rem;
-    letter-spacing: 0.1em;
-    color: var(--muted);
-    text-transform: uppercase;
-  }
-  .nodes-more strong { color: var(--green); }
+  .jsec{background:var(--dk3);border-top:1px solid var(--br);border-bottom:1px solid var(--br)}
+  .jgrid{display:grid;grid-template-columns:1fr 1fr;gap:2rem;margin-top:3rem}
+  .jcard{background:var(--dk2);border:1px solid var(--br);border-radius:4px;padding:2rem;position:relative}
+  .jcard.urg{border-color:rgba(255,184,0,.4);background:linear-gradient(135deg,rgba(255,184,0,.04),var(--dk2))}
+  .ubanner{position:absolute;top:-1px;left:0;right:0;background:var(--gold);padding:.35rem 1rem;text-align:center;font-family:var(--fc);font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--dk);font-weight:700;border-radius:4px 4px 0 0}
+  .ji{font-size:1.8rem;margin-bottom:1rem}
+  .jt{font-family:var(--fc);font-size:1.45rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:#fff;margin-bottom:.4rem}
+  .jsub{font-family:var(--fc);font-size:.68rem;letter-spacing:.15em;text-transform:uppercase;color:var(--g);margin-bottom:1rem}
+  .dbadge{display:inline-flex;align-items:center;gap:.5rem;font-family:var(--fc);font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);border:1px solid rgba(255,184,0,.3);background:rgba(255,184,0,.06);padding:.4rem 1rem;border-radius:2px;margin-bottom:1rem}
+  .jb{font-size:.91rem;color:var(--mu);line-height:1.75;margin-bottom:1.5rem}
+  .jb strong{color:var(--tx);font-weight:500}
+  .jfs{display:flex;flex-direction:column;gap:.55rem;margin-bottom:1.5rem}
+  .jf{display:flex;align-items:flex-start;gap:.55rem;font-size:.86rem;color:var(--mu)}
+  .jf::before{content:'→';color:var(--g);font-family:var(--fc);flex-shrink:0;margin-top:.05rem}
+  .jf.go::before{color:var(--gold)}
+  .bjoin{display:inline-flex;align-items:center;gap:.6rem;font-family:var(--fc);font-size:.88rem;letter-spacing:.1em;text-transform:uppercase;font-weight:600;padding:.8rem 1.8rem;border-radius:2px;text-decoration:none;cursor:pointer;transition:.2s}
+  .bjoin.gn{background:var(--g);color:var(--dk);border:none}.bjoin.gn:hover{background:#00ff88}
+  .bjoin.go{background:var(--gold);color:var(--dk);border:none}.bjoin.go:hover{background:#ffc933}
 
-  /* ── APP CTA ── */
-  .app-cta {
-    background: linear-gradient(135deg, var(--dark2) 0%, #0a1525 100%);
-    border-top: 1px solid var(--border);
-    border-bottom: 1px solid var(--border);
-    position: relative;
-    overflow: hidden;
-  }
-  .app-cta::before {
-    content: '';
-    position: absolute; right: -100px; top: -100px;
-    width: 500px; height: 500px;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(0,232,122,0.05) 0%, transparent 70%);
-    pointer-events: none;
-  }
-  .app-cta-inner {
-    display: grid;
-    grid-template-columns: 1fr auto;
-    gap: 3rem;
-    align-items: center;
-    flex-wrap: wrap;
-  }
-  .app-stores {
-    display: flex; gap: 1rem; flex-wrap: wrap;
-    margin-top: 2rem;
-  }
-  .store-btn {
-    display: flex; align-items: center; gap: 0.75rem;
-    padding: 0.8rem 1.4rem;
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    text-decoration: none;
-    background: rgba(255,255,255,0.03);
-    transition: border-color 0.2s, background 0.2s;
-  }
-  .store-btn:hover { border-color: var(--muted); background: rgba(255,255,255,0.06); }
-  .store-icon { font-size: 1.5rem; }
-  .store-text { display: flex; flex-direction: column; }
-  .store-sub {
-    font-family: var(--font-cond);
-    font-size: 0.65rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--muted);
-  }
-  .store-name {
-    font-family: var(--font-cond);
-    font-size: 1rem;
-    font-weight: 600;
-    color: var(--text);
-  }
-  .app-visual {
-    display: flex; gap: 1rem; align-items: flex-end;
-    opacity: 0.9;
-  }
-  .phone-mock {
-    width: 110px;
-    background: var(--dark3);
-    border: 1px solid rgba(255,255,255,0.1);
-    border-radius: 16px;
-    overflow: hidden;
-    position: relative;
-  }
-  .phone-mock.tall { height: 220px; }
-  .phone-mock.short { height: 190px; margin-bottom: 0.5rem; }
-  .phone-screen {
-    width: 100%; height: 100%;
-    background: linear-gradient(160deg, #0d1a2a, #071a12);
-    display: flex; flex-direction: column;
-    align-items: center; justify-content: center;
-    gap: 0.5rem;
-    padding: 1rem;
-  }
-  .phone-logo {
-    font-family: var(--font-display);
-    font-size: 1.8rem;
-    color: var(--green);
-    letter-spacing: 0.03em;
-  }
-  .phone-dot {
-    width: 6px; height: 6px;
-    border-radius: 50%; background: var(--green);
-    animation: pulse 2s infinite;
-  }
-  .phone-bar {
-    width: 60%; height: 3px; border-radius: 2px;
-    background: rgba(0,232,122,0.2);
-  }
-  .phone-bar2 {
-    width: 40%; height: 3px; border-radius: 2px;
-    background: rgba(255,255,255,0.06);
-  }
-  .coming-tag {
-    font-family: var(--font-cond);
-    font-size: 0.65rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--gold);
-    border: 1px solid rgba(255,184,0,0.2);
-    background: rgba(255,184,0,0.05);
-    padding: 0.25rem 0.6rem;
-    border-radius: 2px;
-    margin-top: 0.3rem;
-  }
+  .appsec{background:linear-gradient(135deg,var(--dk2) 0%,#0a1525 100%);border-top:1px solid var(--br);position:relative;overflow:hidden}
+  .appsec::before{content:'';position:absolute;right:-100px;top:-100px;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(0,232,122,.05) 0%,transparent 70%);pointer-events:none}
+  .appinn{display:grid;grid-template-columns:1fr auto;gap:3rem;align-items:center}
+  .srow{display:flex;gap:1rem;flex-wrap:wrap;margin-top:2rem}
+  .sbtn{display:flex;align-items:center;gap:.75rem;padding:.75rem 1.3rem;border:1px solid var(--br);border-radius:4px;text-decoration:none;background:rgba(255,255,255,.03);transition:border-color .2s,background .2s}
+  .sbtn:hover{border-color:var(--mu);background:rgba(255,255,255,.05)}
+  .sbtn.web{border-color:rgba(0,232,122,.3);background:rgba(0,232,122,.04)}.sbtn.web:hover{background:rgba(0,232,122,.08)}
+  .sico{font-size:1.3rem;line-height:1}
+  .stxt{display:flex;flex-direction:column}
+  .ssub{font-family:var(--fc);font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--mu)}
+  .snm{font-family:var(--fc);font-size:.92rem;font-weight:600;color:var(--tx)}
+  .ctag{font-family:var(--fc);font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);border:1px solid rgba(255,184,0,.2);background:rgba(255,184,0,.05);padding:.18rem .45rem;border-radius:2px}
+  .ltag{font-family:var(--fc);font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;color:var(--g);border:1px solid rgba(0,232,122,.3);background:rgba(0,232,122,.06);padding:.18rem .45rem;border-radius:2px}
+  .prow{display:flex;gap:1rem;align-items:flex-end}
+  .pmk{background:var(--dk3);border:1px solid rgba(255,255,255,.1);border-radius:14px;overflow:hidden}
+  .pmk.tl{width:105px;height:215px}.pmk.sh{width:105px;height:185px}
+  .pscr{width:100%;height:100%;background:linear-gradient(160deg,#0d1a2a,#071a12);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.5rem;padding:1rem}
+  .plogoapp{font-family:var(--fa);font-size:1.7rem;color:var(--g)}
+  .pb1{width:60%;height:2px;border-radius:2px;background:rgba(0,232,122,.2)}
+  .pb2{width:40%;height:2px;border-radius:2px;background:rgba(255,255,255,.06)}
+  .pdot2{width:6px;height:6px;border-radius:50%;background:var(--g);animation:pls 2s infinite}
 
-  /* ── TOTEMIAN BANNER ── */
-  .totemian-bar {
-    background: var(--dark3);
-    border-top: 1px solid var(--border);
-    padding: 3rem 2rem;
-    text-align: center;
-  }
-  .totemian-bar p {
-    font-family: var(--font-cond);
-    font-size: 0.85rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin-bottom: 0.6rem;
-  }
-  .totemian-logo {
-    font-family: var(--font-display);
-    font-size: 2rem;
-    letter-spacing: 0.06em;
-    color: var(--text);
-  }
-  .totemian-logo span { color: var(--green); }
+  .tbbar{background:var(--dk3);border-top:1px solid var(--br);padding:3rem 2rem;text-align:center}
+  .tbbar p{font-family:var(--fc);font-size:.78rem;letter-spacing:.15em;text-transform:uppercase;color:var(--mu);margin-bottom:.5rem}
+  .tblogo{font-family:var(--fa);font-size:2rem;letter-spacing:.06em;color:var(--tx)}
+  .tblogo span{color:var(--g)}
 
-  /* ── FOOTER ── */
-  footer {
-    background: #030508;
-    border-top: 1px solid var(--border);
-    padding: 2.5rem 2rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 1rem;
-  }
-  .footer-brand {
-    font-family: var(--font-display);
-    font-size: 1.5rem;
-    color: var(--green);
-    letter-spacing: 0.04em;
-  }
-  .footer-brand span { color: var(--muted); }
-  .footer-copy {
-    font-size: 0.82rem;
-    color: var(--muted);
-    letter-spacing: 0.04em;
-  }
-  .footer-links { display: flex; gap: 1.5rem; }
-  .footer-links a {
-    font-family: var(--font-cond);
-    font-size: 0.8rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--muted);
-    text-decoration: none;
-    transition: color 0.2s;
-  }
-  .footer-links a:hover { color: var(--green); }
+  footer{background:#030508;border-top:1px solid var(--br);padding:2.2rem 2rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1.5rem}
+  .fbrand{font-family:var(--fa);font-size:1.4rem;color:var(--g);letter-spacing:.04em}
+  .fbrand span{color:var(--mu)}
+  .fcp{font-size:.78rem;color:var(--mu)}
+  .flinks{display:flex;gap:1.5rem}
+  .flinks a{font-family:var(--fc);font-size:.76rem;letter-spacing:.1em;text-transform:uppercase;color:var(--mu);text-decoration:none;transition:color .2s}
+  .flinks a:hover{color:var(--g)}
 
-  /* ── DIVIDER ── */
-  .divider {
-    width: 60px; height: 2px;
-    background: var(--green);
-    margin: 1.5rem 0;
-  }
+  @media(max-width:820px){nav{padding:1rem}.nlinks{display:none}.cg,.pgrid,.s6g,.jgrid,.appinn{grid-template-columns:1fr}.prow{display:none}.psec::before{font-size:7rem}.ndgrid{grid-template-columns:1fr 1fr}}
 
-  @media (max-width: 720px) {
-    nav { padding: 1rem; }
-    .nav-links { display: none; }
-    .app-cta-inner { grid-template-columns: 1fr; }
-    .app-visual { display: none; }
-    .nodes-grid { grid-template-columns: 1fr 1fr; }
-  }
+  /* ── NODE MODAL ── */
+  .modal-overlay{position:fixed;inset:0;z-index:500;background:rgba(4,6,14,.82);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;padding:1.5rem;opacity:0;pointer-events:none;transition:opacity .25s}
+  .modal-overlay.open{opacity:1;pointer-events:all}
+  .modal{background:var(--dk2);border:1px solid rgba(255,255,255,.12);border-radius:6px;width:100%;max-width:480px;overflow:hidden;transform:translateY(16px);transition:transform .25s}
+  .modal-overlay.open .modal{transform:translateY(0)}
+  .modal-header{background:var(--dk3);padding:1.4rem 1.6rem;display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;border-bottom:1px solid var(--br)}
+  .modal-title-wrap{display:flex;flex-direction:column;gap:.4rem}
+  .modal-tier{font-family:var(--fc);font-size:.68rem;font-weight:700;letter-spacing:.1em;padding:.15rem .5rem;border-radius:2px;align-self:flex-start}
+  .modal-name{font-family:var(--fc);font-size:1.5rem;font-weight:700;letter-spacing:.04em;color:#fff;line-height:1.2}
+  .modal-area{font-family:var(--fc);font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;color:var(--mu)}
+  .modal-close{background:none;border:none;cursor:pointer;color:var(--mu);padding:.3rem;border-radius:2px;transition:color .2s;flex-shrink:0;line-height:1;font-size:1.2rem}
+  .modal-close:hover{color:var(--tx)}
+  .modal-body{padding:1.6rem}
+  .modal-row{display:flex;align-items:center;gap:.9rem;padding:.75rem 0;border-bottom:1px solid var(--br)}
+  .modal-row:last-child{border-bottom:none}
+  .modal-icon{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:.9rem}
+  .modal-icon.g{background:var(--gd)}
+  .modal-icon.b{background:rgba(100,160,255,.1)}
+  .modal-icon.gold{background:var(--goldd)}
+  .modal-icon.mu{background:rgba(107,122,153,.1)}
+  .modal-info{display:flex;flex-direction:column;gap:.15rem;min-width:0}
+  .modal-info-label{font-family:var(--fc);font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:var(--mu)}
+  .modal-info-val{font-family:var(--fc);font-size:.95rem;font-weight:600;color:var(--tx);word-break:break-all}
+  .modal-info-val a{color:var(--g);text-decoration:none}
+  .modal-info-val a:hover{text-decoration:underline}
+  .modal-actions{display:flex;gap:.75rem;margin-top:1.4rem;flex-wrap:wrap}
+  .modal-btn{display:inline-flex;align-items:center;gap:.5rem;font-family:var(--fc);font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;font-weight:600;padding:.6rem 1.1rem;border-radius:2px;text-decoration:none;cursor:pointer;transition:.2s;border:none}
+  .modal-btn.primary{background:var(--g);color:var(--dk)}.modal-btn.primary:hover{background:#00ff88}
+  .modal-btn.ghost{background:transparent;color:var(--mu);border:1px solid var(--br)}.modal-btn.ghost:hover{border-color:var(--mu);color:var(--tx)}
+  .modal-spinner{text-align:center;padding:2rem;font-family:var(--fc);font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;color:var(--mu)}
+  .ndi{cursor:pointer}
+  .ndi:hover .nn{color:var(--g)}
 </style>
 </head>
 <body>
 
-<!-- NAV -->
+<!-- NODE DETAIL MODAL -->
+<div class="modal-overlay" id="modal-overlay" role="dialog" aria-modal="true">
+  <div class="modal" id="modal">
+    <div class="modal-header">
+      <div class="modal-title-wrap">
+        <span class="modal-tier" id="m-tier"></span>
+        <div class="modal-name" id="m-name"></div>
+        <div class="modal-area" id="m-area"></div>
+      </div>
+      <button class="modal-close" id="modal-close" aria-label="Close">✕</button>
+    </div>
+    <div class="modal-body" id="modal-body">
+      <div class="modal-spinner"><div class="bdot" style="margin:0 auto .6rem"></div>Loading...</div>
+    </div>
+  </div>
+</div>
+
 <nav>
-  <a href="#" class="nav-logo">TRIBE<span>26</span></a>
-  <ul class="nav-links">
-    <li><a href="#how">How it works</a></li>
+  <a href="#" class="nlogo">TRIBE<span>26</span></a>
+  <ul class="nlinks">
+    <li><a href="#how">How It Works</a></li>
+    <li><a href="#economy">Economy</a></li>
+    <li><a href="#community">Community</a></li>
     <li><a href="#nodes">Network</a></li>
-    <li><a href="#app">App</a></li>
+    <li><a href="#join">Join</a></li>
   </ul>
-  <a href="#app" class="nav-cta">Join the Tribe</a>
+  <a href="https://tribe.totemian.com/welcome" class="ncta">Open Web App</a>
 </nav>
 
-<!-- HERO -->
 <section class="hero">
-  <div class="hex-bg"></div>
-  <div class="hero-badge">
-    <div class="badge-dot"></div>
-    Launching before FIFA World Cup 2026
+  <div class="hbg"></div>
+  <div class="pcbg">
+    <span class="pchar" style="top:12%;left:6%">قبیله</span>
+    <span class="pchar" style="bottom:15%;right:4%;font-size:7rem;opacity:.6">۲۶</span>
+    <span class="pchar" style="top:62%;left:3%;font-size:4.5rem">ما</span>
   </div>
-  <h1 class="hero-title">TRIBE<span class="accent">26</span></h1>
-  <p class="hero-tagline">Your city. Your network. <strong>Your game.</strong></p>
-  <div class="hero-actions">
-    <a href="#app" class="btn-primary">
-      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 2l6 10H2L8 2z" fill="currentColor" fill-opacity=".3"/><circle cx="8" cy="9" r="4" fill="currentColor"/></svg>
-      Get Early Access
-    </a>
-    <a href="#how" class="btn-secondary">
-      Explore the Network
-    </a>
+  <div class="hbadge"><div class="bdot"></div>Launching before FIFA World Cup 2026</div>
+  <h1 class="htitle">TRIBE<span class="ac">26</span></h1>
+  <p class="hline">Your city. Your network. <strong>Your game.</strong></p>
+  <div class="hpsub">اتصال، مشارکت، رشد — برای همه</div>
+  <div class="hacts">
+    <a href="https://tribe.totemian.com/welcome" class="btn-p">Open Web App</a>
+    <a href="#how" class="btn-s">Explore the Ecosystem</a>
   </div>
-  <div class="hero-scroll">
-    <div class="scroll-line"></div>
-    <span class="scroll-label">Scroll</span>
-  </div>
+  <div class="scrl"><div class="scrl-ln"></div><span class="scrl-lb">Scroll</span></div>
 </section>
 
-<!-- COUNTDOWN BAR -->
-<div class="countdown-bar">
-  <span class="countdown-label">FIFA World Cup 2026 kicks off in</span>
-  <div class="countdown-units">
-    <div class="cd-unit">
-      <span class="cd-num" id="cd-days">--</span>
-      <span class="cd-label">Days</span>
-    </div>
-    <span class="cd-sep">:</span>
-    <div class="cd-unit">
-      <span class="cd-num" id="cd-hrs">--</span>
-      <span class="cd-label">Hours</span>
-    </div>
-    <span class="cd-sep">:</span>
-    <div class="cd-unit">
-      <span class="cd-num" id="cd-min">--</span>
-      <span class="cd-label">Min</span>
-    </div>
-    <span class="cd-sep">:</span>
-    <div class="cd-unit">
-      <span class="cd-num" id="cd-sec">--</span>
-      <span class="cd-label">Sec</span>
-    </div>
+<div class="cdbar">
+  <span class="cdlb">FIFA World Cup 2026 kicks off in</span>
+  <div class="cdrow">
+    <div class="cdu"><span class="cdnum" id="dd">--</span><span class="cdlabel">Days</span></div>
+    <span class="cdsep">:</span>
+    <div class="cdu"><span class="cdnum" id="dh">--</span><span class="cdlabel">Hours</span></div>
+    <span class="cdsep">:</span>
+    <div class="cdu"><span class="cdnum" id="dm">--</span><span class="cdlabel">Min</span></div>
+    <span class="cdsep">:</span>
+    <div class="cdu"><span class="cdnum" id="ds">--</span><span class="cdlabel">Sec</span></div>
   </div>
-  <span class="cd-flag">USA · Canada · Mexico</span>
+  <span class="cdflag">USA · Canada · Mexico</span>
 </div>
 
-<!-- STATS -->
-<div style="background: var(--dark); padding: 5rem 2rem;">
+<div class="sw">
   <div class="stats">
-    <div class="stat-item">
-      <div class="stat-num"><span id="stat1">0</span><span class="stat-accent">+</span></div>
-      <div class="stat-unit">Active Nodes & Contributors</div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-num"><span id="stat2">0</span></div>
-      <div class="stat-unit">Cities in Greater Vancouver</div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-num"><span id="stat3">0</span></div>
-      <div class="stat-unit">App Platforms at Launch</div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-num"><span class="stat-accent">'</span><span id="stat4">0</span><span>26</span></div>
-      <div class="stat-unit">Launch Year — World Cup Edition</div>
-    </div>
+    <div class="si2"><div class="snum"><span id="s1">0</span><span class="sa">+</span></div><div class="sunit">Active Nodes &amp; Contributors</div></div>
+    <div class="si2"><div class="snum"><span id="s2">0</span></div><div class="sunit">Cities across Greater Vancouver</div></div>
+    <div class="si2"><div class="snum"><span id="s3">0</span></div><div class="sunit">Access Platforms at Launch</div></div>
+    <div class="si2"><div class="snum"><span class="sa">#</span><span id="s4">0</span></div><div class="sunit">Network Packages Available</div></div>
   </div>
 </div>
 
-<!-- HOW IT WORKS -->
 <section class="how" id="how">
-  <div class="section-inner">
-    <div class="section-label">How it works</div>
-    <h2 class="section-title">One Ecosystem.<br><span class="dim">Three Roles.</span></h2>
-    <p class="section-body">TRIBE26 connects communities through a layered participation model — every person, business, and location plays a distinct role in building a stronger local network.</p>
-    <div class="how-grid">
-      <div class="role-card" data-num="01">
-        <div class="role-icon green">
-          <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="6" r="3" fill="currentColor"/><path d="M3 15c0-3.314 2.686-6 6-6s6 2.686 6 6" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>
-        </div>
-        <div class="role-name">Member</div>
-        <div class="role-sub">Consume &amp; Connect</div>
-        <p class="role-desc">Join the TRIBE26 community. Discover local businesses, participate in events, and experience Greater Vancouver through a network built for you.</p>
+  <div class="si">
+    <div class="slb">Participation model</div>
+    <h2 class="st">One Ecosystem.<br><span class="dm">Three Roles.</span></h2>
+    <p class="sb" style="max-width:580px">TRIBE26 connects communities through a layered model — every person, business, and location plays a distinct, valued role in building a stronger local network together.</p>
+    <div class="hgrid">
+      <div class="rc" data-n="01">
+        <div class="ri g"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="6" r="3" fill="#00E87A"/><path d="M3 15c0-3.314 2.686-6 6-6s6 2.686 6 6" stroke="#00E87A" stroke-width="1.5" fill="none"/></svg></div>
+        <div class="rn">Member</div><div class="rs">Consume &amp; Connect</div>
+        <p class="rd">Anyone who joins TRIBE26 is a Member. Discover local businesses, access contributor services, follow World Cup activations near you, and earn value within the ecosystem simply by engaging. You don't need to create or host anything — you benefit from what others build around you.</p>
       </div>
-      <div class="role-card" data-num="02">
-        <div class="role-icon gold">
-          <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 2l2 5h5l-4 3 1.5 5L9 12l-4.5 3L6 10 2 7h5z" fill="currentColor"/></svg>
-        </div>
-        <div class="role-name">Contributor</div>
-        <div class="role-sub">Create &amp; Earn</div>
-        <p class="role-desc">Validate your skills and services within the ecosystem. Reach an engaged local audience and grow your presence across the network.</p>
+      <div class="rc" data-n="02">
+        <div class="ri gold"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 2l2 5h5l-4 3 1.5 5L9 12l-4.5 3L6 10 2 7h5z" fill="#FFB800"/></svg></div>
+        <div class="rn">Contributor</div><div class="rs">Create &amp; Earn</div>
+        <p class="rd">Contributors are validated skill-providers: chefs, tutors, trainers, designers, translators, therapists, or any service professional. Offer your services to Members through the platform, earn recognition and revenue, and grow your reputation within the TRIBE26 economy.</p>
       </div>
-      <div class="role-card" data-num="03">
-        <div class="role-icon blue">
-          <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><rect x="2" y="8" width="14" height="8" rx="1" stroke="currentColor" stroke-width="1.5" fill="none"/><path d="M5 8V6a4 4 0 018 0v2" stroke="currentColor" stroke-width="1.5" fill="none"/><circle cx="9" cy="12" r="1.5" fill="currentColor"/></svg>
-        </div>
-        <div class="role-name">Node / Anchor</div>
-        <div class="role-sub">Sustain &amp; Infrastructure</div>
-        <p class="role-desc">Physical and digital locations that power the network. Nodes provide sustained infrastructure — the backbone of the TRIBE26 ecosystem across every neighbourhood.</p>
+      <div class="rc" data-n="03">
+        <div class="ri b"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><rect x="2" y="8" width="14" height="8" rx="1" stroke="#64a0ff" stroke-width="1.5" fill="none"/><path d="M5 8V6a4 4 0 018 0v2" stroke="#64a0ff" stroke-width="1.5" fill="none"/><circle cx="9" cy="12" r="1.5" fill="#64a0ff"/></svg></div>
+        <div class="rn">Node / Anchor</div><div class="rs">Sustain &amp; Power</div>
+        <p class="rd">Nodes are physical or digital locations that power the network infrastructure. A bakery, café, pharmacy, or exchange hosting a Totemian Brandboard becomes an Anchor Node — a trusted, visible community hub with reach across the entire ecosystem.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- NODES -->
-<section class="nodes-section" id="nodes">
-  <div class="section-inner">
-    <div class="nodes-header">
+<section class="circ" id="economy">
+  <div class="si">
+    <div class="cg">
+      <div class="ct">
+        <div class="slb">Circular Economy</div>
+        <h2 class="st">Value Flows.<br><span class="dm">Nobody Leaks.</span></h2>
+        <div class="dv"></div>
+        <p>Most platforms extract value from communities and send it elsewhere. TRIBE26 is built on a different principle: <strong>value generated inside the network stays inside the network.</strong></p>
+        <p>Members engage → Contributors earn and grow → Nodes gain visibility and foot traffic → the ecosystem attracts more Members → and the loop continues. Every interaction, every screen impression, every transaction feeds back into the same community that generated it.</p>
+        <p>This is not charity — it is <strong>structural design.</strong> When a local bakery hosts a Brandboard and earns network recognition, that recognition drives Members to their door, which funds their capacity, which strengthens the whole ecosystem. The network is the engine.</p>
+        <div class="pills">
+          <span class="pill pg">Local-first</span>
+          <span class="pill pg">Value retention</span>
+          <span class="pill pgo">Community dividend</span>
+          <span class="pill pgo">No extractive middlemen</span>
+          <span class="pill pb">Web3-ready infrastructure</span>
+          <span class="pill pb">Transparent contribution scoring</span>
+        </div>
+      </div>
+      <div style="width:100%;max-width:380px;margin:0 auto">
+        <svg viewBox="0 0 360 360" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%">
+          <defs>
+            <marker id="ag" markerWidth="8" markerHeight="6" refX="6" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#00E87A"/></marker>
+            <marker id="ad" markerWidth="8" markerHeight="6" refX="6" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#FFB800"/></marker>
+            <marker id="ab" markerWidth="8" markerHeight="6" refX="6" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#64a0ff"/></marker>
+          </defs>
+          <circle cx="180" cy="180" r="48" fill="rgba(0,232,122,.06)" stroke="rgba(0,232,122,.25)" stroke-width="1"/>
+          <text x="180" y="173" text-anchor="middle" font-family="'Bebas Neue',sans-serif" font-size="15" fill="#00E87A">TRIBE26</text>
+          <text x="180" y="192" text-anchor="middle" font-family="'Barlow Condensed',sans-serif" font-size="8" fill="rgba(0,232,122,.6)" letter-spacing="2">ECOSYSTEM</text>
+          <circle cx="180" cy="60" r="38" fill="rgba(13,17,32,.9)" stroke="rgba(0,232,122,.4)" stroke-width="1.2"/>
+          <text x="180" y="55" text-anchor="middle" font-family="'Bebas Neue',sans-serif" font-size="14" fill="#00E87A">Member</text>
+          <text x="180" y="70" text-anchor="middle" font-family="'Barlow Condensed',sans-serif" font-size="8" fill="#6b7a99" letter-spacing="1">CONSUME</text>
+          <circle cx="298" cy="250" r="38" fill="rgba(13,17,32,.9)" stroke="rgba(255,184,0,.4)" stroke-width="1.2"/>
+          <text x="298" y="244" text-anchor="middle" font-family="'Bebas Neue',sans-serif" font-size="12" fill="#FFB800">Contributor</text>
+          <text x="298" y="260" text-anchor="middle" font-family="'Barlow Condensed',sans-serif" font-size="8" fill="#6b7a99" letter-spacing="1">CREATE</text>
+          <circle cx="62" cy="250" r="38" fill="rgba(13,17,32,.9)" stroke="rgba(100,160,255,.4)" stroke-width="1.2"/>
+          <text x="62" y="245" text-anchor="middle" font-family="'Bebas Neue',sans-serif" font-size="14" fill="#64a0ff">Node</text>
+          <text x="62" y="261" text-anchor="middle" font-family="'Barlow Condensed',sans-serif" font-size="8" fill="#6b7a99" letter-spacing="1">SUSTAIN</text>
+          <path d="M215 90 C245 110 268 150 275 210" stroke="#FFB800" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#ad)"/>
+          <path d="M260 255 C230 265 190 265 105 258" stroke="#64a0ff" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#ab)"/>
+          <path d="M62 210 C65 160 100 100 142 72" stroke="#00E87A" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#ag)"/>
+          <text x="258" y="163" font-family="'Barlow Condensed',sans-serif" font-size="8" fill="#FFB800" letter-spacing="1">services</text>
+          <text x="165" y="282" font-family="'Barlow Condensed',sans-serif" font-size="8" fill="#64a0ff" letter-spacing="1">recognition</text>
+          <text x="60" y="145" font-family="'Barlow Condensed',sans-serif" font-size="8" fill="#00E87A" letter-spacing="1">engagement</text>
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="soc" id="s6">
+  <div class="si">
+    <div class="s6g">
       <div>
-        <div class="section-label">Network Locations</div>
-        <h2 class="section-title">100+ Nodes.<br><span class="dim">Greater Vancouver.</span></h2>
+        <div class="slb">Society 6 Framework</div>
+        <h2 class="st">The Sixth<br><span class="dm">Sector.</span></h2>
+        <div class="dv"></div>
+        <p class="sb">Modern society is organised around five established sectors. TRIBE26 is built on the conviction that a sixth has emerged — the networked community — and it deserves real infrastructure, not just a social media feed.</p>
+        <div class="s6q">
+          <p>When neighbours transact with neighbours, when a local contributor earns through the same network that screens his community's events, when a pharmacy hosts a digital board and becomes a neighbourhood anchor — <strong>that is not a marketplace. That is a living society.</strong></p>
+        </div>
+        <div style="margin-top:1.5rem;padding:1.2rem;background:var(--dk3);border:1px solid var(--br);border-radius:4px">
+          <div class="slb" style="margin-bottom:.5rem">What this means for you</div>
+          <p style="font-size:.88rem;color:var(--mu);line-height:1.75">Whether you are a first-generation immigrant building a service business, a student offering tutoring, or a long-standing merchant wanting to reach your neighbourhood — <strong style="color:var(--tx);font-weight:500">TRIBE26 gives the sixth sector its first real infrastructure in Greater Vancouver.</strong></p>
+        </div>
       </div>
-      <p class="section-body" style="max-width: 340px; margin: 0;">From West Vancouver to Tri-Cities, our anchor locations span every major corridor — bakeries, cafes, restaurants, and specialty retailers woven into the daily life of your city.</p>
-    </div>
-
-    <div class="nodes-grid" id="nodes-grid">
-      <!-- JS populated -->
-    </div>
-
-    <div class="nodes-more">
-      <strong>100+</strong> verified locations live at launch &mdash; and growing
+      <div>
+        <div class="s6sec">
+          <div class="s6it"><div class="s6n">01</div><div class="s6nm">Government</div><div class="s6d">Policy, regulation, public services</div></div>
+          <div class="s6it"><div class="s6n">02</div><div class="s6nm">Market / Business</div><div class="s6d">Commerce, employment, capital</div></div>
+          <div class="s6it"><div class="s6n">03</div><div class="s6nm">Civil Society</div><div class="s6d">NGOs, charities, advocacy</div></div>
+          <div class="s6it"><div class="s6n">04</div><div class="s6nm">Academia</div><div class="s6d">Research, knowledge, education</div></div>
+          <div class="s6it"><div class="s6n">05</div><div class="s6nm">Media</div><div class="s6d">Information, narrative, culture</div></div>
+          <div class="s6it s6h"><div class="s6n">06</div><div class="s6nm">Networked Community</div><div class="s6d">TRIBE26 — the infrastructure layer where community value circulates locally, not outward</div></div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- APP CTA -->
-<section class="app-cta" id="app">
-  <div class="section-inner app-cta-inner">
+<section class="psec" id="community">
+  <div class="si">
+    <div class="pgrid">
+      <div>
+        <div class="slb">Community Roots</div>
+        <h2 class="st">Built With<br><span class="dm">Persian Roots.<br>Open to All.</span></h2>
+        <div class="dv"></div>
+        <p class="sb">TRIBE26 grew from deep roots in the Iranian-Canadian community across Greater Vancouver — one of the most entrepreneurial, educated, and tightly connected communities on the North Shore and beyond.</p>
+        <p class="sb" style="margin-top:1rem">That origin gives the platform its values: <strong style="color:var(--tx);font-weight:500">collective trust, family-level accountability, and commerce that respects the human relationship first.</strong> But the door is open to every community, language, and background. The network is richer when it is wider.</p>
+        <div class="cflags">
+          <span class="cf ac">ایرانی — Persian</span>
+          <span class="cf">Filipino</span>
+          <span class="cf">Korean</span>
+          <span class="cf">South Asian</span>
+          <span class="cf">Chinese</span>
+          <span class="cf">Latin American</span>
+          <span class="cf">Middle Eastern</span>
+          <span class="cf">European</span>
+          <span class="cf">Indigenous</span>
+          <span class="cf">+ Every community</span>
+        </div>
+      </div>
+      <div class="pwords">
+        <div style="font-family:var(--fc);font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--mu);margin-bottom:.8rem">Our values — در فارسی و انگلیسی</div>
+        <div class="pw"><div class="pwfa">قبیله</div><span class="pwsp">—</span><div><div class="pwen">Tribe</div><div style="font-size:.68rem;color:var(--mu)">The community you belong to</div></div></div>
+        <div class="pw"><div class="pwfa">همبستگی</div><span class="pwsp">—</span><div><div class="pwen">Solidarity</div><div style="font-size:.68rem;color:var(--mu)">Strength through connection</div></div></div>
+        <div class="pw"><div class="pwfa">مشارکت</div><span class="pwsp">—</span><div><div class="pwen">Participation</div><div style="font-size:.68rem;color:var(--mu)">Everyone's role matters</div></div></div>
+        <div class="pw"><div class="pwfa">اعتماد</div><span class="pwsp">—</span><div><div class="pwen">Trust</div><div style="font-size:.68rem;color:var(--mu)">Foundation of every trade</div></div></div>
+        <div class="pw"><div class="pwfa">رشد</div><span class="pwsp">—</span><div><div class="pwen">Growth</div><div style="font-size:.68rem;color:var(--mu)">Shared and compound</div></div></div>
+        <div class="pw"><div class="pwfa">ما با هم</div><span class="pwsp">—</span><div><div class="pwen">Together We Are</div><div style="font-size:.68rem;color:var(--mu)">The whole is greater than parts</div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="ndsec" id="nodes">
+  <div class="si">
+    <div class="ndhead">
+      <div>
+        <div class="slb">Network Locations</div>
+        <h2 class="st">100+ Nodes.<br><span class="dm">Greater Vancouver.</span></h2>
+      </div>
+      <p class="sb" style="max-width:340px;margin:0">From West Vancouver Marine Drive to Tri-Cities, our anchor nodes span every major corridor — cafes, bakeries, restaurants, pharmacies, and specialty retailers woven into daily life.</p>
+    </div>
+    <div class="ndgrid" id="ndgrid"></div>
+    <div class="ndmore">Network spans <strong>West Van · North Van · Downtown · Burnaby · East Van · Tri-Cities</strong> &mdash; <strong>100+</strong> verified locations at launch</div>
+  </div>
+</section>
+
+<section class="jsec" id="join">
+  <div class="si">
+    <div class="slb">Join the network</div>
+    <h2 class="st">Grow With<br><span class="dm">TRIBE26.</span></h2>
+    <p class="sb" style="max-width:620px">Whether you offer skills or host a physical location, TRIBE26 has a role for you. Join before the World Cup and become part of Vancouver's most connected community ecosystem.</p>
+    <div class="jgrid">
+      <div class="jcard">
+        <div class="ji">⚡</div>
+        <div class="jt">Become a Contributor</div>
+        <div class="jsub">Offer your skills · Earn within the ecosystem</div>
+        <p class="jb">Are you a chef, tutor, trainer, designer, photographer, translator, or any kind of service provider? List your services on TRIBE26 and reach an engaged, trusted local audience — with no heavy commission model eating into your work.</p>
+        <div class="jfs">
+          <div class="jf">Your own contributor profile in the TRIBE26 app</div>
+          <div class="jf">Reach Members across 100+ node locations</div>
+          <div class="jf">Earn recognition scores that grow your visibility</div>
+          <div class="jf">Be part of FIFA World Cup 2026 community activations</div>
+          <div class="jf">Web3-ready — your contribution history belongs to you</div>
+        </div>
+        <a href="https://tribe.totemian.com/welcome" class="bjoin gn">Apply as Contributor →</a>
+      </div>
+      <div class="jcard urg">
+        <div class="ubanner">⚡ Physical Location Deadline — May 25, 2026</div>
+        <div style="margin-top:2rem">
+          <div class="ji">📍</div>
+          <div class="jt">Become an Anchor Node</div>
+          <div class="jsub">Physical location · Digital infrastructure · Community hub</div>
+          <div class="dbadge">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5" stroke="#FFB800" stroke-width="1.2"/><path d="M6 3.5v3l2 1.5" stroke="#FFB800" stroke-width="1.2" stroke-linecap="round"/></svg>
+            Register by May 25, 2026 for World Cup inclusion
+          </div>
+          <p class="jb">If your business has a physical storefront, you qualify as a TRIBE26 Anchor Node. Locations registering before <strong>May 25, 2026</strong> receive a complimentary <strong>Totemian Brandboard</strong> — a digital display screen installed at no cost — and join the Vancouver World Cup Fan Playground network.</p>
+          <div class="jfs">
+            <div class="jf go">Free Totemian Brandboard installed at your location</div>
+            <div class="jf go">Listed on the TRIBE26 World Cup Vancouver Playground map</div>
+            <div class="jf go">Exposure to FIFA 2026 fan traffic across Greater Vancouver</div>
+            <div class="jf go">Revenue share from advertising on your Brandboard</div>
+            <div class="jf go">Permanent AAA/AA/A node status in the Totemian ad network</div>
+            <div class="jf go">Priority listing in app for Members near your location</div>
+          </div>
+          <a href="https://tribe.totemian.com/welcome" class="bjoin go">Register Your Location →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="appsec" id="app">
+  <div class="si appinn">
     <div>
-      <div class="section-label">Mobile Application</div>
-      <h2 class="section-title">Your TRIBE.<br><span class="dim">In Your Pocket.</span></h2>
-      <div class="divider"></div>
-      <p class="section-body">The TRIBE26 app connects members with contributor services and node locations across Greater Vancouver. Launching on iOS and Android before the FIFA World Cup 2026 kickoff.</p>
-      <div class="app-stores">
-        <a href="#" class="store-btn">
-          <span class="store-icon">&#xf8ff;</span>
-          <span class="store-text">
-            <span class="store-sub">Download on the</span>
-            <span class="store-name">App Store</span>
-          </span>
-          <span class="coming-tag">Soon</span>
+      <div class="slb">Access TRIBE26</div>
+      <h2 class="st">Your TRIBE.<br><span class="dm">Anywhere.</span></h2>
+      <div class="dv"></div>
+      <p class="sb">The TRIBE26 platform is live now as a web app, and launching on iOS and Android before FIFA World Cup 2026 — connecting Members, Contributors, and Nodes across Greater Vancouver in real time.</p>
+      <div class="srow">
+        <a href="https://tribe.totemian.com/welcome" class="sbtn web">
+          <span class="sico">🌐</span>
+          <span class="stxt"><span class="ssub">Access now on</span><span class="snm">tribe.totemian.com</span></span>
+          <span class="ltag">Live</span>
         </a>
-        <a href="#" class="store-btn">
-          <span class="store-icon">&#9654;</span>
-          <span class="store-text">
-            <span class="store-sub">Get it on</span>
-            <span class="store-name">Google Play</span>
-          </span>
-          <span class="coming-tag">Soon</span>
+        <a href="#" class="sbtn">
+          <span class="sico" style="font-size:1.2rem">&#xf8ff;</span>
+          <span class="stxt"><span class="ssub">Download on the</span><span class="snm">App Store</span></span>
+          <span class="ctag">Soon</span>
+        </a>
+        <a href="#" class="sbtn">
+          <span class="sico">▶</span>
+          <span class="stxt"><span class="ssub">Get it on</span><span class="snm">Google Play</span></span>
+          <span class="ctag">Soon</span>
         </a>
       </div>
     </div>
-    <div class="app-visual">
-      <div class="phone-mock short">
-        <div class="phone-screen">
-          <div class="phone-logo">T26</div>
-          <div class="phone-bar"></div>
-          <div class="phone-bar2"></div>
-          <div class="phone-dot"></div>
-        </div>
-      </div>
-      <div class="phone-mock tall">
-        <div class="phone-screen">
-          <div class="phone-logo">T26</div>
-          <div class="phone-bar"></div>
-          <div class="phone-bar2"></div>
-          <div class="phone-bar"></div>
-          <div class="phone-dot"></div>
-          <div class="coming-tag">World Cup Edition</div>
-        </div>
-      </div>
+    <div class="prow">
+      <div class="pmk sh"><div class="pscr"><div class="plogoapp">T26</div><div class="pb1"></div><div class="pb2"></div><div class="pdot2"></div></div></div>
+      <div class="pmk tl"><div class="pscr"><div class="plogoapp">T26</div><div class="pb1"></div><div class="pb2"></div><div class="pb1"></div><div class="pdot2"></div><div style="font-family:var(--fc);font-size:.58rem;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);border:1px solid rgba(255,184,0,.25);background:rgba(255,184,0,.05);padding:.18rem .45rem;border-radius:2px;margin-top:.3rem">World Cup Edition</div></div></div>
     </div>
   </div>
 </section>
 
-<!-- TOTEMIAN FOOTER BANNER -->
-<div class="totemian-bar">
+<div class="tbbar">
   <p>Part of the</p>
-  <div class="totemian-logo">TOTEMIAN<span> Ecosystem</span></div>
-  <p style="margin-top: 0.5rem; font-size: 0.75rem; letter-spacing: 0.08em;">Digital Infrastructure &amp; Community Platform · Vancouver, BC</p>
+  <div class="tblogo">TOTEMIAN<span> Ecosystem</span></div>
+  <p style="margin-top:.5rem;font-size:.7rem;letter-spacing:.08em">Digital Infrastructure &amp; Community Platform · Vancouver, BC · <a href="https://totemian.ca" style="color:var(--g);text-decoration:none">totemian.ca</a></p>
 </div>
 
-<!-- FOOTER -->
 <footer>
-  <div class="footer-brand">TRIBE<span>26</span>.com</div>
-  <div class="footer-copy">&copy; 2026 Totemian Brandboards Inc. All rights reserved.</div>
-  <div class="footer-links">
+  <div class="fbrand">TRIBE<span>26</span>.com</div>
+  <div style="display:flex;flex-direction:column;gap:.8rem;align-items:center">
+    <div style="font-family:var(--fc);font-size:.65rem;letter-spacing:.18em;text-transform:uppercase;color:var(--mu)">Download the app</div>
+    <div style="display:flex;gap:.75rem;flex-wrap:wrap;justify-content:center">
+      <a href="https://tribe.totemian.com/welcome" class="sbtn web" style="padding:.5rem 1rem;border-radius:3px;font-size:.8rem">
+        <span style="font-size:1rem">🌐</span>
+        <span class="stxt"><span class="ssub">Open</span><span class="snm" style="font-size:.8rem">Web App</span></span>
+        <span class="ltag">Live</span>
+      </a>
+      <a href="#" class="sbtn" style="padding:.5rem 1rem;border-radius:3px">
+        <span style="font-size:1rem">&#xf8ff;</span>
+        <span class="stxt"><span class="ssub">App Store</span><span class="snm" style="font-size:.8rem">iOS</span></span>
+        <span class="ctag">Soon</span>
+      </a>
+      <a href="#" class="sbtn" style="padding:.5rem 1rem;border-radius:3px">
+        <span style="font-size:1rem">▶</span>
+        <span class="stxt"><span class="ssub">Google Play</span><span class="snm" style="font-size:.8rem">Android</span></span>
+        <span class="ctag">Soon</span>
+      </a>
+    </div>
+  </div>
+  <div class="flinks">
+    <a href="https://tribe.totemian.com/welcome">Web App</a>
+    <a href="https://totemian.ca">Totemian</a>
     <a href="#">Privacy</a>
-    <a href="#">Terms</a>
     <a href="#">Contact</a>
   </div>
 </footer>
 
 <script>
-  // Countdown to FIFA World Cup 2026 opening match (June 11, 2026)
-  const target = new Date('2026-06-11T19:00:00-07:00');
-  function updateCountdown() {
-    const now = new Date();
-    const diff = target - now;
-    if (diff <= 0) {
-      document.getElementById('cd-days').textContent = '00';
-      document.getElementById('cd-hrs').textContent = '00';
-      document.getElementById('cd-min').textContent = '00';
-      document.getElementById('cd-sec').textContent = '00';
-      return;
-    }
-    const d = Math.floor(diff / 86400000);
-    const h = Math.floor((diff % 86400000) / 3600000);
-    const m = Math.floor((diff % 3600000) / 60000);
-    const s = Math.floor((diff % 60000) / 1000);
-    document.getElementById('cd-days').textContent = String(d).padStart(2,'0');
-    document.getElementById('cd-hrs').textContent = String(h).padStart(2,'0');
-    document.getElementById('cd-min').textContent = String(m).padStart(2,'0');
-    document.getElementById('cd-sec').textContent = String(s).padStart(2,'0');
-  }
-  updateCountdown();
-  setInterval(updateCountdown, 1000);
+const wc = new Date('2026-06-11T19:00:00-07:00');
+function tick(){
+  const d=wc-new Date();
+  if(d<=0){['dd','dh','dm','ds'].forEach(x=>document.getElementById(x).textContent='00');return}
+  document.getElementById('dd').textContent=String(Math.floor(d/86400000)).padStart(2,'0');
+  document.getElementById('dh').textContent=String(Math.floor((d%86400000)/3600000)).padStart(2,'0');
+  document.getElementById('dm').textContent=String(Math.floor((d%3600000)/60000)).padStart(2,'0');
+  document.getElementById('ds').textContent=String(Math.floor((d%60000)/1000)).padStart(2,'0');
+}
+tick();setInterval(tick,1000);
 
-  // Animated counters
-  function animateCounter(el, target, suffix) {
-    let start = 0;
-    const duration = 1800;
-    const step = (timestamp) => {
-      if (!start) start = timestamp;
-      const progress = Math.min((timestamp - start) / duration, 1);
-      const eased = 1 - Math.pow(1 - progress, 3);
-      el.textContent = Math.round(eased * target) + (suffix || '');
-      if (progress < 1) requestAnimationFrame(step);
-    };
-    requestAnimationFrame(step);
+function anim(id,end){
+  let s=null;const el=document.getElementById(id);
+  const f=ts=>{if(!s)s=ts;const p=Math.min((ts-s)/1800,1),e=1-Math.pow(1-p,3);el.textContent=Math.round(e*end);if(p<1)requestAnimationFrame(f)};
+  requestAnimationFrame(f);
+}
+const obs=new IntersectionObserver(e=>{if(e[0].isIntersecting){anim('s1',100);anim('s2',8);anim('s3',3);anim('s4',10);obs.disconnect()}},{threshold:.5});
+obs.observe(document.getElementById('s1'));
+
+// Live node data — fetched directly from the Totemian Google Sheet CSV
+const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRFtz0cCba4_8Juw0G_idtkw4A1O4Lq7zK07V495YoIxBo1TPd6lmbzvecRZQF_V83WzI2Qfnw328az/pub?gid=23302969&single=true&output=csv';
+const g = document.getElementById('ndgrid');
+const ndmore = document.querySelector('.ndmore');
+
+function renderNodes(rows) {
+  const header = rows[0].map(h => (h || '').toLowerCase().trim());
+
+  // Score each column for likely role
+  function bestCol(keywords) {
+    const idx = keywords.map(k => header.findIndex(h => h.includes(k))).find(i => i !== -1);
+    return idx !== undefined ? idx : -1;
   }
 
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        animateCounter(document.getElementById('stat1'), 100);
-        animateCounter(document.getElementById('stat2'), 8);
-        animateCounter(document.getElementById('stat3'), 2);
-        animateCounter(document.getElementById('stat4'), '');
-        document.getElementById('stat4').textContent = '';
-        observer.disconnect();
+  const LOCATIONS = ['north vancouver','port coquitlam','burnaby','downtown','dt vancouver','west vancouver','east van','coquitlam','port moody','richmond','surrey','langley'];
+  const VALID_TIERS = ['AAA','AA','A'];
+
+  // Detect columns
+  let iName  = bestCol(['name','business','title','company','store']);
+  let iArea  = bestCol(['area','location','city','neighbourhood','address','zone']);
+  let iTier  = bestCol(['tier','class','grade','rank','level']);
+  let iScore = bestCol(['score','total','point','pts']);
+  let iWeb   = bestCol(['website','web','url','site','www']);
+  let iPhone = bestCol(['phone','tel','mobile','cell','contact']);
+  let iEmail = bestCol(['email','e-mail','mail']);
+
+  // If no explicit name column, scan data rows to find column whose values look like business names
+  // (not location strings, not numbers, not tier values)
+  if (iName === -1) {
+    const data = rows.slice(1).filter(r => r.some(c => c && c.trim()));
+    for (let c = 0; c < header.length; c++) {
+      const vals = data.map(r => (r[c] || '').trim().toLowerCase()).filter(Boolean);
+      const isLocationCol = vals.filter(v => LOCATIONS.some(l => v === l || v.startsWith(l))).length > vals.length * 0.5;
+      const isTierCol     = vals.filter(v => VALID_TIERS.map(t=>t.toLowerCase()).includes(v)).length > vals.length * 0.5;
+      const isNumberCol   = vals.filter(v => !isNaN(parseFloat(v))).length > vals.length * 0.7;
+      if (!isLocationCol && !isTierCol && !isNumberCol && vals.length > 0) {
+        iName = c; break;
       }
-    });
-  }, { threshold: 0.5 });
-  observer.observe(document.getElementById('stat1'));
+    }
+  }
+  // If area not found, find column that looks like location strings
+  if (iArea === -1) {
+    const data = rows.slice(1).filter(r => r.some(c => c && c.trim()));
+    for (let c = 0; c < header.length; c++) {
+      if (c === iName) continue;
+      const vals = data.map(r => (r[c] || '').trim().toLowerCase()).filter(Boolean);
+      const isLocationCol = vals.filter(v => LOCATIONS.some(l => v === l || v.startsWith(l))).length > vals.length * 0.4;
+      if (isLocationCol) { iArea = c; break; }
+    }
+  }
+  // Fallback
+  if (iName  === -1) iName  = Math.min(1, header.length - 1);
+  if (iArea  === -1) iArea  = 0;
+  if (iScore === -1) iScore = -1;
 
-  // Sample nodes data (representative — real data syncs from Totemian portal)
-  const nodes = [
-    { name: 'Beaucoup Bakery', area: 'West Van / Marine', tier: 'AAA' },
-    { name: 'Bon Sushi', area: 'Lonsdale, North Van', tier: 'AAA' },
-    { name: 'Cafe Gondola', area: 'Downtown Vancouver', tier: 'AAA' },
-    { name: 'Terra Breads', area: 'Downtown Vancouver', tier: 'AAA' },
-    { name: 'Lonsdale Quay Market', area: 'North Vancouver', tier: 'AAA' },
-    { name: 'Provence Marinaside', area: 'False Creek', tier: 'AAA' },
-    { name: 'Nemesis Coffee', area: 'Gastown, Vancouver', tier: 'AA' },
-    { name: 'Noodle Box', area: 'Burnaby / East Van', tier: 'AA' },
-    { name: 'The Painted Ship', area: 'Tri-Cities', tier: 'AA' },
-    { name: 'Moksha Yoga', area: 'North Van Lonsdale', tier: 'AA' },
-    { name: 'Save-On-Foods', area: 'West Vancouver', tier: 'AA' },
-    { name: 'Blue Sky Exchange', area: 'Downtown Vancouver', tier: 'AA' },
-    { name: 'Pharmasave', area: 'North Vancouver', tier: 'A' },
-    { name: 'The Framing Shop', area: 'Coquitlam', tier: 'A' },
-    { name: 'Eco Hair Studio', area: 'Port Moody', tier: 'A' },
-    { name: 'Pacific Auto Works', area: 'Burnaby', tier: 'A' },
-    { name: 'Sunrise Bakery', area: 'East Vancouver', tier: 'A' },
-    { name: 'Mountain Gear Co.', area: 'North Vancouver', tier: 'A' },
-    { name: '+ 82 more locations', area: 'Greater Vancouver', tier: '' },
-  ];
+  const data = rows.slice(1).filter(r => {
+    const name = (r[iName] || '').trim();
+    return name && !VALID_TIERS.includes(name.toUpperCase());
+  });
 
-  const grid = document.getElementById('nodes-grid');
-  nodes.forEach(n => {
-    const tierClass = n.tier === 'AAA' ? 'tier-aaa' : n.tier === 'AA' ? 'tier-aa' : 'tier-a';
-    grid.innerHTML += `
-      <div class="node-item">
-        ${n.tier ? `<span class="node-tier ${tierClass}">${n.tier}</span>` : ''}
-        <div>
-          <div class="node-name">${n.name}</div>
-          <div class="node-area">${n.area}</div>
-        </div>
+  // Sort: valid tiers first (AAA→AA→A), then score desc, then alpha
+  data.sort((a, b) => {
+    const tierOrder = {AAA:0,AA:1,A:2};
+    const ta = ((iTier !== -1 ? r=>r[iTier] : ()=>'')(a) || '').trim().toUpperCase();
+    const tb2 = ((iTier !== -1 ? r=>r[iTier] : ()=>'')(b) || '').trim().toUpperCase();
+    const to = (tierOrder[ta]??9) - (tierOrder[tb2]??9);
+    if (to !== 0) return to;
+    if (iScore !== -1) return parseFloat(b[iScore]||0) - parseFloat(a[iScore]||0);
+    return (a[iName]||'').localeCompare(b[iName]||'');
+  });
+
+  g.innerHTML = '';
+  data.forEach(r => {
+    const name    = (r[iName]   || '').trim();
+    const area    = (r[iArea]   || '').trim();
+    const tier    = iTier  !== -1 ? (r[iTier]  || '').trim().toUpperCase() : '';
+    const score   = iScore !== -1 ? (r[iScore] || '').trim() : '';
+    const website = iWeb   !== -1 ? (r[iWeb]   || '').trim() : '';
+    const phone   = iPhone !== -1 ? (r[iPhone] || '').trim() : '';
+    const email   = iEmail !== -1 ? (r[iEmail] || '').trim() : '';
+    const validTier = VALID_TIERS.includes(tier);
+    const tc  = tier==='AAA'?'taaa':tier==='AA'?'taa':tier==='A'?'ta':'';
+    const tb  = validTier ? `<span class="nt ${tc}">${tier}</span>` : '';
+    const sc  = (score && !isNaN(parseFloat(score))) ? `<span style="font-size:.62rem;color:var(--mu);margin-left:.3rem">${Math.round(parseFloat(score))}pts</span>` : '';
+    const nodeData = JSON.stringify({name, area, tier: validTier ? tier : '', score, website, phone, email});
+    g.innerHTML += `
+      <div class="ndi" data-node='${nodeData.replace(/'/g,"&#39;")}' title="Click for details">
+        <div class="ndi-top">${tb}<div class="nn">${name}</div></div>
+        <div class="na">${area}${sc}</div>
       </div>`;
   });
+
+  const total = data.length;
+  ndmore.innerHTML = `Network spans <strong>West Van · North Van · Downtown · Burnaby · East Van · Tri-Cities</strong> &mdash; <strong>${total}</strong> verified locations live`;
+  document.getElementById('s1').textContent = total + '+';
+}
+
+function showLoading() {
+  g.innerHTML = `<div style="grid-column:1/-1;padding:2.5rem;text-align:center;color:var(--mu);font-family:var(--fc);font-size:.82rem;letter-spacing:.12em;text-transform:uppercase">
+    <div class="bdot" style="margin:0 auto .8rem"></div>Loading live network data...</div>`;
+}
+
+function showError() {
+  g.innerHTML = `<div style="grid-column:1/-1;padding:2rem;text-align:center;color:var(--mu);font-family:var(--fc);font-size:.8rem;letter-spacing:.1em;text-transform:uppercase">
+    Network data temporarily unavailable — <a href="https://tribe.totemian.com/welcome" style="color:var(--g);text-decoration:none">visit the web app</a> for live listings</div>`;
+}
+
+showLoading();
+fetch(CSV_URL)
+  .then(r => { if (!r.ok) throw new Error('fetch failed'); return r.text(); })
+  .then(csv => {
+    const rows = csv.trim().split('\n').map(line => {
+      const cells = []; let cur = '', inQ = false;
+      for (let i = 0; i < line.length; i++) {
+        const c = line[i];
+        if (c === '"') { inQ = !inQ; }
+        else if (c === ',' && !inQ) { cells.push(cur.trim()); cur = ''; }
+        else { cur += c; }
+      }
+      cells.push(cur.trim());
+      return cells;
+    });
+    if (rows.length < 2) throw new Error('empty');
+    renderNodes(rows);
+  })
+  .catch(() => showError());
+
+// ── MODAL SYSTEM ──────────────────────────────────────────────
+const overlay   = document.getElementById('modal-overlay');
+const mClose    = document.getElementById('modal-close');
+const mName     = document.getElementById('m-name');
+const mArea     = document.getElementById('m-area');
+const mTier     = document.getElementById('m-tier');
+const mBody     = document.getElementById('modal-body');
+
+// Google Places API (no-key text search via public embed proxy)
+// We build the info from CSV columns when available, and supplement with Maps links
+function openModal(node) {
+  mName.textContent = node.name;
+  mArea.textContent = node.area;
+
+  // Style the tier badge
+  const tierColors = {AAA:['rgba(0,232,122,.12)','#00E87A','rgba(0,232,122,.35)'], AA:['rgba(255,184,0,.1)','#FFB800','rgba(255,184,0,.3)'], A:['rgba(107,122,153,.08)','#6b7a99','rgba(107,122,153,.2)']};
+  const tc = tierColors[node.tier];
+  if (tc && node.tier) {
+    mTier.textContent = node.tier;
+    mTier.style.cssText = `background:${tc[0]};color:${tc[1]};border:1px solid ${tc[2]};display:inline-block`;
+  } else {
+    mTier.style.display = 'none';
+  }
+
+  // Build modal body from whatever data we have
+  const rows = [];
+
+  // Website
+  if (node.website) {
+    const url = node.website.startsWith('http') ? node.website : 'https://' + node.website;
+    const display = url.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, '');
+    rows.push(`<div class="modal-row">
+      <div class="modal-icon g"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6" stroke="#00E87A" stroke-width="1.2"/><path d="M7 1c-1.5 2-1.5 10 0 12M7 1c1.5 2 1.5 10 0 12M1 7h12" stroke="#00E87A" stroke-width="1.2"/></svg></div>
+      <div class="modal-info"><div class="modal-info-label">Website</div><div class="modal-info-val"><a href="${url}" target="_blank" rel="noopener">${display}</a></div></div>
+    </div>`);
+  }
+
+  // Phone
+  if (node.phone) {
+    const tel = node.phone.replace(/[^+\d]/g,'');
+    rows.push(`<div class="modal-row">
+      <div class="modal-icon b"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 2.5C2 2 2.5 1 3.5 1s2 1 2.5 2-.5 2-1 2.5c.5 1 2.5 3 3.5 3.5.5-.5 1.5-1.5 2.5-1S13 11 13 12s-1 1.5-1.5 1.5C5 14 0 8 2 2.5z" stroke="#64a0ff" stroke-width="1.1" fill="none"/></svg></div>
+      <div class="modal-info"><div class="modal-info-label">Phone</div><div class="modal-info-val"><a href="tel:${tel}">${node.phone}</a></div></div>
+    </div>`);
+  }
+
+  // Email
+  if (node.email) {
+    rows.push(`<div class="modal-row">
+      <div class="modal-icon gold"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="1" y="3" width="12" height="8" rx="1.5" stroke="#FFB800" stroke-width="1.1"/><path d="M1 4l6 4 6-4" stroke="#FFB800" stroke-width="1.1"/></svg></div>
+      <div class="modal-info"><div class="modal-info-label">Email</div><div class="modal-info-val"><a href="mailto:${node.email}">${node.email}</a></div></div>
+    </div>`);
+  }
+
+  // Score
+  if (node.score) {
+    rows.push(`<div class="modal-row">
+      <div class="modal-icon mu"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1l1.5 4H13l-3.5 2.5 1.5 4L7 9 3 11.5 4.5 7.5 1 5h4.5z" stroke="#6b7a99" stroke-width="1.1" fill="none"/></svg></div>
+      <div class="modal-info"><div class="modal-info-label">Totemian Node Score</div><div class="modal-info-val" style="color:var(--g)">${Math.round(parseFloat(node.score))} / 100 pts</div></div>
+    </div>`);
+  }
+
+  // Always: Google Maps + Google Search links
+  const mapsQ  = encodeURIComponent(`${node.name} ${node.area} Vancouver`);
+  const searchQ = encodeURIComponent(`${node.name} ${node.area}`);
+  const actions = `<div class="modal-actions">
+    <a href="https://www.google.com/maps/search/${mapsQ}" target="_blank" rel="noopener" class="modal-btn primary">
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="5" r="2.5" stroke="currentColor" stroke-width="1.2"/><path d="M6 1C3.8 1 2 2.8 2 5c0 3 4 7 4 7s4-4 4-7c0-2.2-1.8-4-4-4z" stroke="currentColor" stroke-width="1.2" fill="none"/></svg>
+      View on Maps
+    </a>
+    <a href="https://www.google.com/search?q=${searchQ}" target="_blank" rel="noopener" class="modal-btn ghost">
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><circle cx="5" cy="5" r="3.5" stroke="currentColor" stroke-width="1.2"/><path d="M8.5 8.5l2 2" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+      Search Online
+    </a>
+  </div>`;
+
+  mBody.innerHTML = (rows.length ? rows.join('') : `<div class="modal-row"><div class="modal-info"><div class="modal-info-label" style="color:var(--mu);font-size:.82rem">Contact details will appear here once the TRIBE26 app launches. Use the links below to find this location.</div></div></div>`) + actions;
+  overlay.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  overlay.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+mClose.addEventListener('click', closeModal);
+overlay.addEventListener('click', e => { if (e.target === overlay) closeModal(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+// Delegate clicks on node cards — set up once, works for dynamically rendered cards
+document.getElementById('ndgrid').addEventListener('click', e => {
+  const card = e.target.closest('.ndi');
+  if (!card) return;
+  const node = JSON.parse(card.dataset.node || '{}');
+  if (node.name) openModal(node);
+});
 </script>
 </body>
 </html>
