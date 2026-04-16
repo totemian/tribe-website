@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   title: "Tribe26 | One App to Unlock Your City",
   description: "Connect with Vancouver's local businesses and earn rewards. Download Tribe26 today or join as a local business to boost your Google reviews and digital presence.",
   keywords: ["Vancouver", "local business", "app", "rewards", "Google reviews", "SEO", "community", "Tribe26"],
-    generator: 'v0.app'
+  generator: 'v0.app'
 }
 
 export const viewport: Viewport = {
