@@ -2,9 +2,8 @@
 
 import { useState } from "react"
 import { motion } from "framer-motion"
-import Link from "next/link"
-import Image from "next/image"
-import { ArrowLeft, Send, CheckCircle2 } from "lucide-react"
+import { Send, CheckCircle2 } from "lucide-react"
+import { Navigation } from "@/components/navigation"
 
 const API_URL = "https://tribe.api.totemian.com/v1/web/requests"
 const AUTH_KEY = "tribe26jdswjnf"
@@ -49,26 +48,7 @@ export default function ContactPage() {
 
   return (
     <main className="min-h-screen bg-[#121212] flex flex-col">
-      {/* Nav bar */}
-      <div className="fixed top-0 left-0 right-0 z-50 bg-[#121212]/95 backdrop-blur-md border-b border-white/10">
-        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-          <Link href="/">
-            <motion.div whileHover={{ scale: 1.05 }} transition={{ type: "spring", stiffness: 400, damping: 17 }}>
-              <Image src="/logo-green.png" alt="Tribe26" width={120} height={40} className="h-10 w-auto object-contain" priority />
-            </motion.div>
-          </Link>
-          <Link href="/">
-            <motion.span
-              className="flex items-center gap-2 text-white/60 hover:text-[#CFFF5E] font-mono text-sm transition-colors"
-              whileHover={{ x: -4 }}
-              transition={{ type: "spring", stiffness: 400, damping: 17 }}
-            >
-              <ArrowLeft className="w-4 h-4" />
-              Back to Home
-            </motion.span>
-          </Link>
-        </div>
-      </div>
+      <Navigation />
 
       {/* Content */}
       <div className="flex-1 flex items-center justify-center px-6 pt-28 pb-16">

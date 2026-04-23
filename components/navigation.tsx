@@ -4,9 +4,11 @@ import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import Link from "next/link"
 import Image from "next/image"
-import { useRouter } from "next/navigation"
-import { useLenis } from "lenis/react"
+import { useRouter, usePathname } from "next/navigation"
 import { Menu, X } from "lucide-react"
+
+// Pages whose hero background is dark — nav should use light text even before scrolling
+const DARK_HERO_PAGES = ["/about", "/contact", "/applications"]
 
 const linkVariants = {
   hidden: { opacity: 0, y: -10 },
@@ -44,8 +46,13 @@ const mobileMenuVariants = {
 export function Navigation() {
   const [scrolled, setScrolled] = useState(false)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  const lenis = useLenis()
   const router = useRouter()
+  const pathname = usePathname()
+
+  // On dark-hero pages the nav starts over a dark background, so use light text/logo
+  const darkHero = DARK_HERO_PAGES.includes(pathname)
+  // Use light text when scrolled OR on a dark-hero page (before scrolling)
+  const useLightText = scrolled || darkHero
 
   useEffect(() => {
     const handleScroll = () => {
@@ -57,18 +64,16 @@ export function Navigation() {
 
   const scrollToSection = (id: string) => {
     const element = document.querySelector(id)
-    if (element && lenis) {
-      lenis.scrollTo(element, { offset: -100 })
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth", block: "start" })
     }
     setMobileMenuOpen(false)
   }
 
   const navLinks = [
-    { label: "Home", href: "#hero" },
-    { label: "How It Works", href: "#how-it-works" },
-    { label: "Business Directory", href: "#directory" },
-    { label: "Partnership", href: "#partnership" },
-    { label: "About", href: "#about" },
+    { label: "Home", href: "/", isPage: true },
+    { label: "About", href: "/about", isPage: true },
+    { label: "Applications", href: "/applications", isPage: true },
     { label: "Contact", href: "/contact", isPage: true },
   ]
 
@@ -88,7 +93,7 @@ export function Navigation() {
             transition={{ type: "spring", stiffness: 400, damping: 17 }}
           >
             <Image
-              src={scrolled ? "/logo-green.png" : "/logo.png"}
+              src={useLightText ? "/logo-green.png" : "/logo.png"}
               alt="Tribe26"
               width={120}
               height={40}
@@ -104,7 +109,7 @@ export function Navigation() {
               key={item.label}
               onClick={() => item.isPage ? router.push(item.href) : scrollToSection(item.href)}
               className={`text-sm font-medium tracking-wide transition-colors relative ${
-                scrolled ? "text-white/80 hover:text-[#CFFF5E]" : "text-[#121212]/80 hover:text-[#121212]"
+                useLightText ? "text-white/80 hover:text-[#CFFF5E]" : "text-[#121212]/80 hover:text-[#121212]"
               }`}
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
@@ -163,7 +168,7 @@ export function Navigation() {
                 exit={{ rotate: 90, opacity: 0 }}
                 transition={{ duration: 0.2 }}
               >
-                <X className={scrolled ? "text-white" : "text-[#121212]"} />
+                <X className={useLightText ? "text-white" : "text-[#121212]"} />
               </motion.div>
             ) : (
               <motion.div
@@ -173,7 +178,7 @@ export function Navigation() {
                 exit={{ rotate: -90, opacity: 0 }}
                 transition={{ duration: 0.2 }}
               >
-                <Menu className={scrolled ? "text-white" : "text-[#121212]"} />
+                <Menu className={useLightText ? "text-white" : "text-[#121212]"} />
               </motion.div>
             )}
           </AnimatePresence>
