@@ -4,12 +4,12 @@ import { motion, useInView } from "framer-motion"
 import { useRef } from "react"
 
 const values = [
-  { label: "Tribe", description: "The community you belong to" },
-  { label: "Solidarity", description: "Strength through connection" },
-  { label: "Participation", description: "Everyone's role matters" },
-  { label: "Trust", description: "Foundation of every trade" },
-  { label: "Growth", description: "Shared and compound" },
-  { label: "Together We Are", description: "The whole is greater than parts" },
+  { label: "Tribe", persian: "قبیله", description: "The community you belong to" },
+  { label: "Solidarity", persian: "همبستگی", description: "Strength through connection" },
+  { label: "Participation", persian: "مشارکت", description: "Everyone's role matters" },
+  { label: "Trust", persian: "اعتماد", description: "Foundation of every trade" },
+  { label: "Growth", persian: "رشد", description: "Shared and compound" },
+  { label: "Together We Are", persian: "در کنار هم", description: "The whole is greater than parts" },
 ]
 
 const containerVariants = {
@@ -49,53 +49,69 @@ export function CommunityRootsSection() {
 
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         {/* Header */}
-        <motion.div
-          ref={ref}
-          initial={{ opacity: 0, y: 40 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
-          transition={{ duration: 0.8, ease: [0.25, 0.4, 0.25, 1] }}
-          className="mb-14"
-        >
-          <motion.span
-            className="font-mono text-[#CFFF5E] text-[10px] tracking-[0.3em] uppercase"
-            initial={{ opacity: 0, y: 10 }}
-            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
-            transition={{ delay: 0.1 }}
+        <div className="grid lg:grid-cols-2 gap-12 items-end mb-14">
+          <motion.div
+            ref={ref}
+            initial={{ opacity: 0, y: 40 }}
+            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
+            transition={{ duration: 0.8, ease: [0.25, 0.4, 0.25, 1] }}
           >
-            Community Roots
-          </motion.span>
+            <motion.span
+              className="font-mono text-[#CFFF5E] text-[10px] tracking-[0.3em] uppercase"
+              initial={{ opacity: 0, y: 10 }}
+              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
+              transition={{ delay: 0.1 }}
+            >
+              Community Roots
+            </motion.span>
 
-          <div className="overflow-hidden mt-3">
-            <motion.h2
-              className="text-4xl md:text-6xl font-black text-white tracking-tighter leading-[0.9]"
-              initial={{ y: 80 }}
-              animate={isInView ? { y: 0 } : { y: 80 }}
-              transition={{ duration: 0.6, ease: [0.25, 0.4, 0.25, 1], delay: 0.15 }}
+            <div className="overflow-hidden mt-3">
+              <motion.h2
+                className="text-4xl md:text-6xl font-black text-white tracking-tighter leading-[0.9]"
+                initial={{ y: 80 }}
+                animate={isInView ? { y: 0 } : { y: 80 }}
+                transition={{ duration: 0.6, ease: [0.25, 0.4, 0.25, 1], delay: 0.15 }}
+              >
+                Built With
+              </motion.h2>
+            </div>
+            <div className="overflow-hidden">
+              <motion.h2
+                className="text-4xl md:text-6xl font-black text-[#CFFF5E] tracking-tighter leading-[0.9]"
+                initial={{ y: 80 }}
+                animate={isInView ? { y: 0 } : { y: 80 }}
+                transition={{ duration: 0.6, ease: [0.25, 0.4, 0.25, 1], delay: 0.25 }}
+              >
+                Persian Roots.
+              </motion.h2>
+            </div>
+            <div className="overflow-hidden">
+              <motion.h2
+                className="text-4xl md:text-6xl font-black text-white tracking-tighter leading-[0.9]"
+                initial={{ y: 80 }}
+                animate={isInView ? { y: 0 } : { y: 80 }}
+                transition={{ duration: 0.6, ease: [0.25, 0.4, 0.25, 1], delay: 0.35 }}
+              >
+                Open to All.
+              </motion.h2>
+            </div>
+          </motion.div>
+
+          {/* Right: Persian tagline */}
+          <motion.div
+            className="flex items-end justify-end"
+            initial={{ opacity: 0, x: 30 }}
+            animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 30 }}
+            transition={{ duration: 0.8, ease: [0.25, 0.4, 0.25, 1], delay: 0.3 }}
+          >
+            <p
+              className="font-[family-name:var(--font-vazir)] text-5xl md:text-7xl font-black text-white/10 leading-tight text-right select-none"
+              dir="rtl"
             >
-              Built With
-            </motion.h2>
-          </div>
-          <div className="overflow-hidden">
-            <motion.h2
-              className="text-4xl md:text-6xl font-black text-[#CFFF5E] tracking-tighter leading-[0.9]"
-              initial={{ y: 80 }}
-              animate={isInView ? { y: 0 } : { y: 80 }}
-              transition={{ duration: 0.6, ease: [0.25, 0.4, 0.25, 1], delay: 0.25 }}
-            >
-              Persian Roots.
-            </motion.h2>
-          </div>
-          <div className="overflow-hidden">
-            <motion.h2
-              className="text-4xl md:text-6xl font-black text-white tracking-tighter leading-[0.9]"
-              initial={{ y: 80 }}
-              animate={isInView ? { y: 0 } : { y: 80 }}
-              transition={{ duration: 0.6, ease: [0.25, 0.4, 0.25, 1], delay: 0.35 }}
-            >
-              Open to All.
-            </motion.h2>
-          </div>
-        </motion.div>
+              با آغوشی باز
+            </p>
+          </motion.div>
+        </div>
 
         {/* Two-column layout */}
         <div className="grid lg:grid-cols-2 gap-12 items-start">
@@ -155,6 +171,7 @@ export function CommunityRootsSection() {
                   <span className="text-white font-black text-sm tracking-tight group-hover:text-[#CFFF5E] transition-colors duration-200">
                     {value.label}
                   </span>
+                  <span className="text-white/30 text-sm font-[family-name:var(--font-vazir)]" dir="rtl">{value.persian}</span>
                 </div>
                 <span className="text-white/40 font-mono text-xs text-right max-w-[180px]">
                   {value.description}

@@ -1,6 +1,6 @@
 import type React from "react"
 import type { Metadata, Viewport } from "next"
-import { Inter, JetBrains_Mono } from "next/font/google"
+import { Inter, JetBrains_Mono, Vazirmatn } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
 import ClickSpark from "@/components/click-spark"
 import "./globals.css"
@@ -13,6 +13,11 @@ const _inter = Inter({
 const _jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
   variable: "--font-mono",
+})
+
+const _vazirmatn = Vazirmatn({
+  subsets: ["arabic"],
+  variable: "--font-vazir",
 })
 
 export const metadata: Metadata = {
@@ -33,7 +38,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`font-sans antialiased`}>
+      <body className={`${_vazirmatn.variable} font-sans antialiased`}>
         <ClickSpark
           sparkColor="#CFFF5E"
           sparkSize={12}

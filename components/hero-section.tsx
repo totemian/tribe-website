@@ -96,7 +96,7 @@ export function HeroSection() {
               className="inline-flex items-center gap-2 bg-[#121212] text-white px-3 py-1.5 rounded-full text-xs font-mono tracking-wider"
             >
 
-              VANCOUVER'S LOCAL ECOSYSTEM
+              <span className="font-[family-name:var(--font-vazir)]" dir="rtl">شهر در دستان تو</span>
             </motion.div>
 
             <div className="space-y-1 overflow-hidden">
