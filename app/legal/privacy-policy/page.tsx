@@ -13,7 +13,7 @@ export default function PrivacyPolicyPage() {
       <header className="border-b border-white/10 px-6 py-4">
         <div className="max-w-4xl mx-auto flex items-center justify-between">
           <Link href="/">
-            <Image src="/logo-green.png" alt="Tribe26" width={100} height={34} className="h-8 w-auto object-contain" />
+            <Image src="/log-green-tribre.png" alt="Tribe26" width={100} height={34} className="h-8 w-auto object-contain" />
           </Link>
           <Link href="/" className="text-white/60 hover:text-[#CFFF5E] font-mono text-sm transition-colors">
             ← Back to Home

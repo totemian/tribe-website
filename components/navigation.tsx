@@ -86,29 +86,29 @@ export function Navigation() {
         scrolled ? "bg-[#121212]/95 backdrop-blur-md border-b border-white/10" : "bg-transparent"
       }`}
     >
-      <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+      <div className="max-w-7xl mx-auto px-8 py-5 flex items-center justify-between">
         <Link href="/" className="flex items-center">
           <motion.div
             whileHover={{ scale: 1.05 }}
             transition={{ type: "spring", stiffness: 400, damping: 17 }}
           >
             <Image
-              src={useLightText ? "/logo-green.png" : "/logo.png"}
+              src={useLightText ? "/log-green-tribre.png" : "/logo-tribe.png"}
               alt="Tribe26"
-              width={120}
-              height={40}
-              className="h-10 w-auto object-contain transition-all duration-500"
+              width={160}
+              height={54}
+              className="h-14 w-auto object-contain transition-all duration-500"
               priority
             />
           </motion.div>
         </Link>
 
-        <div className="hidden md:flex items-center gap-8">
+        <div className="hidden md:flex items-center gap-10">
           {navLinks.map((item, i) => (
             <motion.button
               key={item.label}
               onClick={() => item.isPage ? router.push(item.href) : scrollToSection(item.href)}
-              className={`text-sm font-medium tracking-wide transition-colors relative ${
+              className={`text-base font-semibold tracking-wide transition-colors relative ${
                 useLightText ? "text-white/80 hover:text-[#CFFF5E]" : "text-[#121212]/80 hover:text-[#121212]"
               }`}
               initial={{ opacity: 0, y: -10 }}
@@ -129,7 +129,7 @@ export function Navigation() {
         </div>
 
         <motion.button
-          className="hidden md:block bg-[#CFFF5E] text-[#121212] px-6 py-2.5 rounded-full font-bold text-sm tracking-wide relative overflow-hidden"
+          className="hidden md:block bg-[#CFFF5E] text-[#121212] px-8 py-3.5 rounded-full font-bold text-base tracking-wide relative overflow-hidden"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           transition={{ type: "spring", stiffness: 400, damping: 17 }}
@@ -199,7 +199,7 @@ export function Navigation() {
                 <motion.button
                   key={item.label}
                   onClick={() => item.isPage ? (router.push(item.href), setMobileMenuOpen(false)) : scrollToSection(item.href)}
-                  className="block w-full text-left text-white/80 hover:text-[#CFFF5E] text-lg font-medium py-2"
+                  className="block w-full text-left text-white/80 hover:text-[#CFFF5E] text-xl font-semibold py-3"
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: i * 0.1 }}
@@ -208,7 +208,7 @@ export function Navigation() {
                 </motion.button>
               ))}
               <motion.button
-                className="w-full bg-[#CFFF5E] text-[#121212] px-6 py-3 rounded-full font-bold text-sm tracking-wide mt-4"
+                className="w-full bg-[#CFFF5E] text-[#121212] px-8 py-4 rounded-full font-bold text-base tracking-wide mt-4"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3 }}
