@@ -56,17 +56,18 @@ const platforms = [
   },
   {
     id: "android",
-    status: "soon",
+    status: "live",
     icon: Play,
     title: "Android App",
-    subtitle: "Google Play",
+    subtitle: "Direct APK Download",
     description:
-      "Full-featured Android app with deep system integration. Launching on Google Play before the World Cup kicks off in Vancouver.",
-    cta: "Notify Me",
-    href: "/contact",
+      "Full-featured Android app with deep system integration. Download the APK directly and install it on your Android device today.",
+    cta: "Download APK",
+    href: "https://davvaxsuso8l7nbu.public.blob.vercel-storage.com/Tribe26.apk",
+    download: "Tribe26.apk",
     features: ["Native Android performance", "Google Pay ready", "Home screen widgets", "Background sync"],
-    badge: "Coming Soon",
-    accent: false,
+    badge: "Live Now",
+    accent: true,
   },
 ]
 
@@ -244,6 +245,7 @@ export function ApplicationsPlatforms() {
                       href={platform.href}
                       target="_blank"
                       rel="noopener noreferrer"
+                      {...(platform.download ? { download: platform.download } : {})}
                       className="inline-flex items-center gap-2 bg-[#CFFF5E] text-[#121212] px-5 py-2.5 rounded-full font-bold text-xs tracking-wide relative overflow-hidden group/btn"
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}

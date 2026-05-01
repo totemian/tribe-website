@@ -281,7 +281,7 @@ export function Footer() {
             transition={{ type: "spring", stiffness: 400, damping: 17 }}
           >
             <Image
-              src="/logo.png"
+              src="/logo-tribe.png"
               alt="Tribe26"
               width={80}
               height={28}
