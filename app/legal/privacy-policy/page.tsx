@@ -65,8 +65,8 @@ export default function PrivacyPolicyPage() {
             <p>
               We retain your personal data for as long as your account is active or as needed to provide services.
               You may request deletion of your data at any time by contacting us at{" "}
-              <a href="mailto:privacy@tribe26.com" className="text-[#CFFF5E] hover:underline">
-                privacy@tribe26.com
+              <a href="mailto:info@Totemian.com" className="text-[#CFFF5E] hover:underline">
+                info@Totemian.com
               </a>
               .
             </p>
@@ -88,8 +88,8 @@ export default function PrivacyPolicyPage() {
             <p>
               Depending on your location, you may have rights to access, correct, or delete your personal data,
               object to processing, or request data portability. To exercise these rights, contact us at{" "}
-              <a href="mailto:privacy@tribe26.com" className="text-[#CFFF5E] hover:underline">
-                privacy@tribe26.com
+              <a href="mailto:info@Totemian.com" className="text-[#CFFF5E] hover:underline">
+                info@Totemian.com
               </a>
               .
             </p>
@@ -115,8 +115,8 @@ export default function PrivacyPolicyPage() {
             <h2 className="text-xl font-bold text-white mb-3">9. Contact Us</h2>
             <p>
               If you have questions about this Privacy Policy, reach out at{" "}
-              <a href="mailto:privacy@tribe26.com" className="text-[#CFFF5E] hover:underline">
-                privacy@tribe26.com
+              <a href="mailto:info@Totemian.com" className="text-[#CFFF5E] hover:underline">
+                info@Totemian.com
               </a>
               .
             </p>
