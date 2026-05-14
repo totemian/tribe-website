@@ -138,8 +138,8 @@ export default function CookiePolicyPage() {
             <h2 className="text-xl font-bold text-white mb-3">8. Contact Us</h2>
             <p>
               Questions about our use of cookies? Contact us at{" "}
-              <a href="mailto:privacy@tribe26.com" className="text-[#CFFF5E] hover:underline">
-                privacy@tribe26.com
+              <a href="mailto:info@Totemian.com" className="text-[#CFFF5E] hover:underline">
+                info@Totemian.com
               </a>
               .
             </p>
