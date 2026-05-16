@@ -109,24 +109,28 @@ export function AccessSection() {
                 </div>
               </motion.a>
 
-              {/* App Store - Soon */}
-              <motion.div
-                className="flex items-center gap-3 bg-[#121212]/5 border-2 border-[#121212]/10 text-[#121212]/50 px-5 py-3.5 rounded-xl font-bold text-sm tracking-wide cursor-not-allowed select-none"
-                whileHover={{ scale: 1.01 }}
+              {/* App Store - Live */}
+              <motion.a
+                href="https://apps.apple.com/us/app/tribe26/id6764071272"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-3 bg-[#121212] text-white px-5 py-3.5 rounded-xl font-bold text-sm tracking-wide hover:bg-[#121212]/90 transition-colors"
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
               >
                 <Apple className="w-5 h-5 flex-shrink-0" />
                 <div className="text-left">
-                  <div className="text-[10px] font-mono text-[#121212]/40 tracking-widest uppercase leading-none mb-0.5">
+                  <div className="text-[10px] font-mono text-white/60 tracking-widest uppercase leading-none mb-0.5">
                     Download on the
                   </div>
                   <div className="font-black tracking-tight">App Store</div>
                 </div>
-                <div className="ml-auto">
-                  <span className="bg-[#121212]/10 text-[#121212]/40 font-mono text-[9px] font-black tracking-widest uppercase px-2 py-0.5 rounded-full">
-                    Soon
+                <div className="relative z-10 ml-auto">
+                  <span className="bg-[#CFFF5E] text-[#121212] font-mono text-[9px] font-black tracking-widest uppercase px-2 py-0.5 rounded-full">
+                    Live
                   </span>
                 </div>
-              </motion.div>
+              </motion.a>
 
               {/* Google Play - Soon */}
               <motion.div

@@ -72,8 +72,7 @@ export function ApplicationsHero() {
             animate="visible"
             className="text-lg font-mono text-white/60 tracking-tight pt-2 max-w-xl mx-auto"
           >
-            Tribe26 is live now as a web app, installable PWA, and Android APK. Native iOS app
-            launching before FIFA World Cup 2026.
+            Tribe26 is live now as a web app, installable PWA, Android APK, and native iOS app on the App Store.
           </motion.p>
 
           <motion.div
@@ -82,7 +81,7 @@ export function ApplicationsHero() {
             animate="visible"
             className="flex flex-wrap justify-center gap-4 pt-2"
           >
-            {["Web App · Live Now", "PWA · Install Today", "Android · Download Now", "iOS · Coming Soon"].map(
+            {["Web App · Live Now", "PWA · Install Today", "Android · Download Now", "iOS · Live Now"].map(
               (tag, i) => (
                 <motion.div
                   key={tag}
