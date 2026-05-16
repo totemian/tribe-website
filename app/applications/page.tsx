@@ -6,7 +6,7 @@ import { ApplicationsPlatforms } from "@/components/applications-platforms"
 export const metadata = {
   title: "Applications | Tribe26",
   description:
-    "Access Tribe26 on any platform. Available now as a web app, PWA, and Android APK — iOS app coming before FIFA World Cup 2026.",
+    "Access Tribe26 on any platform. Available now as a web app, PWA, Android APK, and on the iOS App Store.",
 }
 
 export default function ApplicationsPage() {

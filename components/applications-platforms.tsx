@@ -42,16 +42,16 @@ const platforms = [
   },
   {
     id: "ios",
-    status: "soon",
+    status: "live",
     icon: Apple,
     title: "iOS App",
     subtitle: "App Store",
     description:
-      "A native iPhone and iPad experience built for speed and polish. Launching on the App Store ahead of FIFA World Cup 2026.",
-    cta: "Notify Me",
-    href: "/contact",
+      "A native iPhone and iPad experience built for speed and polish. Available now on the App Store.",
+    cta: "Download on App Store",
+    href: "https://apps.apple.com/us/app/tribe26/id6764071272",
     features: ["Native iOS performance", "Face ID support", "Apple Pay ready", "Widgets & shortcuts"],
-    badge: "Coming Soon",
+    badge: "Live Now",
     accent: false,
   },
   {

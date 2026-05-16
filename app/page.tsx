@@ -1,5 +1,6 @@
 import { Navigation } from "@/components/navigation"
 import { HeroSection } from "@/components/hero-section"
+import { PlatformStatsSection } from "@/components/platform-stats-section"
 import { FlavorCarousel } from "@/components/flavor-carousel"
 
 import { ActivationsSection } from "@/components/activations-section"
@@ -14,6 +15,7 @@ export default function Home() {
     <main className="min-h-screen bg-background">
       <Navigation />
       <HeroSection />
+      <PlatformStatsSection />
       <FlavorCarousel />
       <ActivationsSection />
       <CommunityRootsSection />
