@@ -8,7 +8,7 @@ import { useRouter, usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 
 // Pages whose hero background is dark — nav should use light text even before scrolling
-const DARK_HERO_PAGES = ["/about", "/contact", "/applications"];
+const DARK_HERO_PAGES = ["/about", "/contact"];
 
 const linkVariants = {
   hidden: { opacity: 0, y: -10 },

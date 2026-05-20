@@ -1,3 +1,7 @@
+"use client";
+
+import { useRef } from "react";
+import { motion, useInView, useReducedMotion } from "framer-motion";
 import {
   Share,
   Home,
@@ -12,22 +16,85 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 
+const ease = [0.25, 0.4, 0.25, 1] as const;
+
+const headerVariants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease } },
+};
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.12, delayChildren: 0.05 },
+  },
+};
+
+// Removed scale — opacity + translateY only
+const cardVariants = {
+  hidden: { opacity: 0, y: 36 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.65, ease } },
+};
+
+// Steps slide in from left — translateX only
+const stepVariants = {
+  hidden: { opacity: 0, x: -16 },
+  visible: (i: number) => ({
+    opacity: 1,
+    x: 0,
+    transition: { duration: 0.45, ease, delay: i * 0.1 },
+  }),
+};
+
+// Connector line — scaleY (transform, GPU composited)
+const lineVariants = {
+  hidden: { scaleY: 0 },
+  visible: { scaleY: 1, transition: { duration: 0.5, ease, delay: 0.3 } },
+};
+
 interface GuideStepProps {
   number: number;
   title: string;
   description: string;
   icon: React.ReactNode;
+  inView: boolean;
+  prefersReduced: boolean;
 }
 
-function GuideStep({ number, title, description, icon }: GuideStepProps) {
+function GuideStep({
+  number,
+  title,
+  description,
+  icon,
+  inView,
+  prefersReduced,
+}: GuideStepProps) {
   return (
-    <div className="flex items-start gap-4 group">
+    <motion.div
+      className="flex items-start gap-4"
+      custom={number - 1}
+      variants={prefersReduced ? undefined : stepVariants}
+      initial={prefersReduced ? false : "hidden"}
+      animate={prefersReduced ? false : inView ? "visible" : "hidden"}
+      style={{ willChange: "transform, opacity" }}
+    >
       <div className="relative">
-        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#CFFF5E] text-sm font-bold text-[#141713] shadow-md shadow-[#CFFF5E]/30 transition-transform group-hover:scale-110">
+        <motion.div
+          className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#CFFF5E] text-sm font-bold text-[#141713] shadow-md shadow-[#CFFF5E]/30"
+          whileHover={prefersReduced ? undefined : { scale: 1.15 }}
+          transition={{ type: "spring", stiffness: 300, damping: 18 }}
+        >
           {number}
-        </div>
+        </motion.div>
         {number < 3 && (
-          <div className="absolute left-1/2 top-full h-6 w-px -translate-x-1/2 bg-linear-to-b from-[#CFFF5E] to-transparent" />
+          <motion.div
+            className="absolute left-1/2 top-full h-6 w-px -translate-x-1/2 bg-linear-to-b from-[#CFFF5E] to-transparent origin-top"
+            variants={prefersReduced ? undefined : lineVariants}
+            initial={prefersReduced ? false : "hidden"}
+            animate={prefersReduced ? false : inView ? "visible" : "hidden"}
+            style={{ willChange: "transform" }}
+          />
         )}
       </div>
       <div className="pt-1">
@@ -41,7 +108,7 @@ function GuideStep({ number, title, description, icon }: GuideStepProps) {
           {description}
         </p>
       </div>
-    </div>
+    </motion.div>
   );
 }
 
@@ -58,14 +125,33 @@ function InstallGuideCard({
   iconBg,
   steps,
 }: InstallGuideCardProps) {
+  const prefersReduced = useReducedMotion();
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { once: true, margin: "-50px" });
+
   return (
-    <div className="group rounded-3xl bg-white p-6 lg:p-8 shadow-sm border border-[#E8EBE4] transition-all duration-300 hover:shadow-lg hover:border-[#CFFF5E]/50">
+    <motion.div
+      ref={ref}
+      variants={prefersReduced ? undefined : cardVariants}
+      whileHover={
+        prefersReduced
+          ? undefined
+          : {
+              y: -6,
+              transition: { type: "spring", stiffness: 280, damping: 20 },
+            }
+      }
+      style={{ willChange: "transform, opacity" }}
+      className="group rounded-3xl bg-white p-6 lg:p-8 shadow-sm border border-[#E8EBE4] transition-shadow duration-300 hover:shadow-lg hover:border-[#CFFF5E]/50"
+    >
       <div className="flex items-center gap-4 mb-8">
-        <div
-          className={`flex h-14 w-14 items-center justify-center rounded-2xl ${iconBg} shadow-lg transition-transform group-hover:scale-105`}
+        <motion.div
+          className={`flex h-14 w-14 items-center justify-center rounded-2xl ${iconBg} shadow-lg`}
+          whileHover={prefersReduced ? undefined : { scale: 1.1, rotate: 5 }}
+          transition={{ type: "spring", stiffness: 300, damping: 18 }}
         >
           {icon}
-        </div>
+        </motion.div>
         <h3 className="text-xl font-bold text-[#141713]">{title}</h3>
       </div>
       <div className="space-y-6">
@@ -76,14 +162,25 @@ function InstallGuideCard({
             title={step.title}
             description={step.description}
             icon={step.icon}
+            inView={inView}
+            prefersReduced={!!prefersReduced}
           />
         ))}
       </div>
-    </div>
+    </motion.div>
   );
 }
 
 export function ApplicationsGuide() {
+  const prefersReduced = useReducedMotion();
+  const headerRef = useRef<HTMLDivElement>(null);
+  const cardsRef = useRef<HTMLDivElement>(null);
+  const helpRef = useRef<HTMLDivElement>(null);
+
+  const headerInView = useInView(headerRef, { once: true, margin: "-60px" });
+  const cardsInView = useInView(cardsRef, { once: true, margin: "-60px" });
+  const helpInView = useInView(helpRef, { once: true, margin: "-40px" });
+
   const guides: InstallGuideCardProps[] = [
     {
       title: "Install PWA",
@@ -155,8 +252,11 @@ export function ApplicationsGuide() {
 
   return (
     <section className="relative bg-linear-to-b from-[#FDFEFB] via-[#F8FAF4] to-[#FDFEFB] py-20 lg:py-28 overflow-hidden">
-      {/* Decorative curved lines */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+      {/* Static decorative lines — no animation */}
+      <div
+        className="absolute inset-0 pointer-events-none overflow-hidden"
+        aria-hidden="true"
+      >
         <svg
           className="absolute top-0 left-0 w-full h-32"
           viewBox="0 0 1440 120"
@@ -188,48 +288,34 @@ export function ApplicationsGuide() {
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative">
         {/* Section Header */}
-        <div className="text-center max-w-2xl mx-auto">
-          <span className="inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-xs font-semibold uppercase tracking-wider text-[#141713] border border-[#E8EBE4] shadow-sm">
-            <Download className="h-3.5 w-3.5 text-[#9ED600]" />
-            How to install
-          </span>
+        <motion.div
+          ref={headerRef}
+          variants={prefersReduced ? undefined : headerVariants}
+          initial={prefersReduced ? false : "hidden"}
+          animate={prefersReduced ? false : headerInView ? "visible" : "hidden"}
+          style={{ willChange: "transform, opacity" }}
+          className="text-center max-w-2xl mx-auto"
+        >
           <h2 className="mt-6 text-3xl font-bold text-[#141713] sm:text-4xl lg:text-5xl text-balance">
             Simple Installation Guide
           </h2>
           <p className="mt-5 text-lg text-[#5A6257] leading-relaxed">
             Get TRIBE26 on your device in just a few steps.
           </p>
-        </div>
+        </motion.div>
 
         {/* Guide Cards */}
-        <div className="mt-14 grid gap-6 md:grid-cols-3">
+        <motion.div
+          ref={cardsRef}
+          variants={prefersReduced ? undefined : containerVariants}
+          initial={prefersReduced ? false : "hidden"}
+          animate={prefersReduced ? false : cardsInView ? "visible" : "hidden"}
+          className="mt-14 grid gap-6 md:grid-cols-3"
+        >
           {guides.map((guide) => (
             <InstallGuideCard key={guide.title} {...guide} />
           ))}
-        </div>
-
-        {/* Help text */}
-        <div className="mt-14 text-center">
-          <div className="inline-flex items-center gap-4 rounded-2xl bg-white px-6 py-4 shadow-sm border border-[#E8EBE4]">
-            <p className="text-sm text-[#5A6257]">Need help?</p>
-            <div className="h-4 w-px bg-[#E8EBE4]" />
-            <Link
-              href="#"
-              className="inline-flex items-center gap-1.5 text-sm font-medium text-[#141713] hover:text-[#9ED600] transition-colors"
-            >
-              Visit our FAQ
-              <ExternalLink className="h-3.5 w-3.5" />
-            </Link>
-            <div className="h-4 w-px bg-[#E8EBE4]" />
-            <Link
-              href="#contact"
-              className="inline-flex items-center gap-1.5 text-sm font-medium text-[#141713] hover:text-[#9ED600] transition-colors"
-            >
-              Contact support
-              <ExternalLink className="h-3.5 w-3.5" />
-            </Link>
-          </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

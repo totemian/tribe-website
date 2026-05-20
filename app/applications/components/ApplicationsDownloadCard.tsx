@@ -1,3 +1,7 @@
+"use client";
+
+import { useRef } from "react";
+import { motion, useInView, useReducedMotion } from "framer-motion";
 import {
   Globe,
   Smartphone,
@@ -6,11 +10,45 @@ import {
   Sparkles,
   Home,
   Apple,
-  Monitor,
   Share2,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+
+const ease = [0.25, 0.4, 0.25, 1] as const;
+
+const headerVariants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease } },
+};
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.1, delayChildren: 0.1 },
+  },
+};
+
+// Removed scale — opacity + translateY only
+const cardVariants = {
+  hidden: { opacity: 0, y: 40 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6, ease },
+  },
+};
+
+// Feature list items — x-only slide (translateX, GPU composited)
+const featureVariants = {
+  hidden: { opacity: 0, x: -10 },
+  visible: (i: number) => ({
+    opacity: 1,
+    x: 0,
+    transition: { duration: 0.4, ease, delay: i * 0.07 },
+  }),
+};
 
 interface DownloadCardProps {
   badge: string;
@@ -38,6 +76,10 @@ function DownloadCard({
   isRecommended = false,
   visualContent,
 }: DownloadCardProps) {
+  const prefersReduced = useReducedMotion();
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { once: true, margin: "-40px" });
+
   const badgeColors = {
     default: "bg-[#E8EBE4] text-[#5A6257]",
     recommended: "bg-[#CFFF5E] text-[#141713]",
@@ -46,28 +88,42 @@ function DownloadCard({
   };
 
   return (
-    <div
-      className={`group relative flex flex-col rounded-3xl bg-white p-6 transition-all duration-300 hover:shadow-xl ${
+    <motion.div
+      ref={ref}
+      variants={prefersReduced ? undefined : cardVariants}
+      initial={prefersReduced ? false : "hidden"}
+      animate={prefersReduced ? false : inView ? "visible" : "hidden"}
+      whileHover={
+        prefersReduced
+          ? undefined
+          : {
+              y: -8,
+              transition: { type: "spring", stiffness: 280, damping: 20 },
+            }
+      }
+      style={{ willChange: "transform, opacity" }}
+      className={`group relative flex flex-col rounded-3xl bg-white p-6 transition-shadow duration-300 hover:shadow-xl ${
         isRecommended
           ? "ring-2 ring-[#CFFF5E] shadow-lg shadow-[#CFFF5E]/20 hover:shadow-[#CFFF5E]/30"
           : "border border-[#E8EBE4] shadow-sm hover:border-[#CFFF5E]/50"
       }`}
     >
-      {/* Recommended glow effect */}
+      {/* Recommended glow — static, no animation (blur is expensive) */}
       {isRecommended && (
-        <div className="absolute -inset-0.5 rounded-3xl bg-linear-to-br from-[#CFFF5E]/20 to-transparent -z-10 blur-xl" />
+        <div
+          className="absolute -inset-0.5 rounded-3xl bg-linear-to-br from-[#CFFF5E]/20 to-transparent -z-10 blur-xl"
+          aria-hidden="true"
+        />
       )}
 
-      {/* Badge */}
       <span
         className={`inline-block self-start rounded-full px-3 py-1 text-xs font-semibold ${badgeColors[badgeType]}`}
       >
         {badge}
       </span>
 
-      {/* Visual area */}
       <div
-        className={`mt-5 flex h-40 items-center justify-center rounded-2xl overflow-hidden transition-all ${
+        className={`mt-5 flex h-40 items-center justify-center rounded-2xl overflow-hidden ${
           isRecommended
             ? "bg-linear-to-br from-[#CFFF5E]/20 to-[#CFFF5E]/5"
             : "bg-linear-to-br from-[#F8FAF4] to-[#FDFEFB]"
@@ -76,33 +132,34 @@ function DownloadCard({
         {visualContent}
       </div>
 
-      {/* Title & Subtitle */}
       <div className="mt-5">
         <h3 className="text-xl font-bold text-[#141713]">{title}</h3>
         <p className="mt-1 text-sm text-[#5A6257]">{subtitle}</p>
       </div>
 
-      {/* Description */}
       <p className="mt-4 text-sm leading-relaxed text-[#5A6257]">
         {description}
       </p>
 
-      {/* Features */}
       <ul className="mt-5 flex-1 space-y-2.5">
         {features.map((feature, index) => (
-          <li
+          <motion.li
             key={index}
+            custom={index}
+            variants={prefersReduced ? undefined : featureVariants}
+            initial={prefersReduced ? false : "hidden"}
+            animate={prefersReduced ? false : inView ? "visible" : "hidden"}
+            style={{ willChange: "transform, opacity" }}
             className="flex items-center gap-2.5 text-sm text-[#141713]"
           >
-            <div className="flex h-5 w-5 items-center justify-center rounded-full bg-[#CFFF5E]/30">
+            <div className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#CFFF5E]/30">
               <Check className="h-3 w-3 text-[#9ED600]" />
             </div>
             {feature}
-          </li>
+          </motion.li>
         ))}
       </ul>
 
-      {/* CTA */}
       <Link href={ctaLink}>
         <Button
           className={`mt-6 w-full font-semibold py-5 transition-all ${
@@ -114,16 +171,16 @@ function DownloadCard({
           {ctaText}
         </Button>
       </Link>
-    </div>
+    </motion.div>
   );
 }
 
-// Visual components for each card
+// ── Visual sub-components — static, no animation ──
+
 function WebAppVisual() {
   return (
     <div className="relative w-full h-full flex items-center justify-center p-4">
       <div className="relative w-full max-w-[180px]">
-        {/* Browser window */}
         <div className="rounded-xl bg-white shadow-lg border border-[#E8EBE4] overflow-hidden">
           <div className="flex items-center gap-1.5 px-3 py-2 bg-[#F8FAF4] border-b border-[#E8EBE4]">
             <div className="h-2 w-2 rounded-full bg-[#FF6B6B]" />
@@ -140,7 +197,6 @@ function WebAppVisual() {
             <div className="h-6 rounded bg-[#F8FAF4]" />
           </div>
         </div>
-        {/* Globe icon floating */}
         <div className="absolute -top-2 -right-2 h-8 w-8 rounded-full bg-[#CFFF5E] flex items-center justify-center shadow-md">
           <Globe className="h-4 w-4 text-[#141713]" />
         </div>
@@ -153,7 +209,6 @@ function PWAVisual() {
   return (
     <div className="relative w-full h-full flex items-center justify-center p-4">
       <div className="relative">
-        {/* Phone with add to home screen */}
         <div className="w-24 rounded-2xl bg-[#141713] p-1.5 shadow-xl">
           <div className="rounded-xl bg-[#1a1d1a] p-2 space-y-2">
             <div className="h-1.5 w-6 mx-auto rounded-full bg-[#5A6257]" />
@@ -171,11 +226,9 @@ function PWAVisual() {
             </div>
           </div>
         </div>
-        {/* Share/Add icon */}
         <div className="absolute -top-3 -right-3 h-10 w-10 rounded-xl bg-white flex items-center justify-center shadow-lg border border-[#CFFF5E]">
           <Share2 className="h-5 w-5 text-[#9ED600]" />
         </div>
-        {/* Sparkles badge */}
         <div className="absolute -bottom-2 -left-2 h-8 w-8 rounded-full bg-[#CFFF5E] flex items-center justify-center shadow-md">
           <Sparkles className="h-4 w-4 text-[#141713]" />
         </div>
@@ -188,7 +241,6 @@ function IOSVisual() {
   return (
     <div className="relative w-full h-full flex items-center justify-center p-4">
       <div className="relative flex items-end gap-2">
-        {/* iPad */}
         <div className="w-20 rounded-xl bg-[#E8EBE4] p-1 shadow-lg">
           <div className="rounded-lg bg-white p-2 space-y-1.5">
             <div className="h-2 w-8 rounded bg-[#CFFF5E]" />
@@ -199,7 +251,6 @@ function IOSVisual() {
             </div>
           </div>
         </div>
-        {/* iPhone */}
         <div className="w-12 rounded-xl bg-[#141713] p-1 shadow-xl">
           <div className="rounded-lg bg-[#1a1d1a] p-1.5 space-y-1">
             <div className="h-1 w-4 mx-auto rounded-full bg-[#5A6257]" />
@@ -207,7 +258,6 @@ function IOSVisual() {
             <div className="h-6 rounded bg-[#2a2d2a]" />
           </div>
         </div>
-        {/* Apple icon badge */}
         <div className="absolute -top-2 right-2 h-9 w-9 rounded-full bg-[#141713] flex items-center justify-center shadow-lg">
           <Apple className="h-5 w-5 text-white" />
         </div>
@@ -220,7 +270,6 @@ function AndroidVisual() {
   return (
     <div className="relative w-full h-full flex items-center justify-center p-4">
       <div className="relative">
-        {/* Android phone */}
         <div className="w-24 rounded-2xl bg-[#1a1d1a] p-1.5 shadow-xl border-2 border-[#3DDC84]/30">
           <div className="rounded-xl bg-[#141713] p-2 space-y-2">
             <div className="h-1 w-8 mx-auto rounded-full bg-[#5A6257]" />
@@ -239,7 +288,6 @@ function AndroidVisual() {
             </div>
           </div>
         </div>
-        {/* Android icon */}
         <div className="absolute -top-3 -right-3 h-10 w-10 rounded-xl bg-[#3DDC84] flex items-center justify-center shadow-lg">
           <Smartphone className="h-5 w-5 text-[#141713]" />
         </div>
@@ -249,6 +297,10 @@ function AndroidVisual() {
 }
 
 export function ApplicationDownloadCard() {
+  const prefersReduced = useReducedMotion();
+  const headerRef = useRef<HTMLDivElement>(null);
+  const headerInView = useInView(headerRef, { once: true, margin: "-60px" });
+
   const cards: DownloadCardProps[] = [
     {
       badge: "No Install",
@@ -328,8 +380,10 @@ export function ApplicationDownloadCard() {
 
   return (
     <section id="download" className="relative bg-[#F8FAF4] py-20 lg:py-28">
-      {/* Background pattern */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-30">
+      <div
+        className="absolute inset-0 overflow-hidden pointer-events-none opacity-30"
+        aria-hidden="true"
+      >
         <svg
           className="absolute top-0 left-1/4 w-96 h-96"
           viewBox="0 0 400 400"
@@ -355,11 +409,14 @@ export function ApplicationDownloadCard() {
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative">
         {/* Section Header */}
-        <div className="text-center max-w-2xl mx-auto">
-          <span className="inline-flex items-center gap-2 rounded-full bg-[#CFFF5E]/30 px-4 py-2 text-xs font-semibold uppercase tracking-wider text-[#141713] border border-[#CFFF5E]/30">
-            <Download className="h-3.5 w-3.5" />
-            Download TRIBE26
-          </span>
+        <motion.div
+          ref={headerRef}
+          variants={prefersReduced ? undefined : headerVariants}
+          initial={prefersReduced ? false : "hidden"}
+          animate={prefersReduced ? false : headerInView ? "visible" : "hidden"}
+          style={{ willChange: "transform, opacity" }}
+          className="text-center max-w-2xl mx-auto"
+        >
           <h2 className="mt-6 text-3xl font-bold text-[#141713] sm:text-4xl lg:text-5xl text-balance">
             Choose Your Download Option
           </h2>
@@ -367,9 +424,9 @@ export function ApplicationDownloadCard() {
             Pick the version that matches your device and how you want to use
             TRIBE26.
           </p>
-        </div>
+        </motion.div>
 
-        {/* Cards Grid */}
+        {/* Cards Grid — each card manages its own inView */}
         <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {cards.map((card) => (
             <DownloadCard key={card.title} {...card} />
@@ -377,8 +434,7 @@ export function ApplicationDownloadCard() {
         </div>
       </div>
 
-      {/* Bottom curved divider */}
-      <div className="absolute bottom-0 left-0 right-0">
+      <div className="absolute bottom-0 left-0 right-0" aria-hidden="true">
         <svg viewBox="0 0 1440 60" fill="none" className="w-full h-auto">
           <path
             d="M0 60V40C360 10 720 50 1080 30C1260 20 1380 35 1440 40V60H0Z"
