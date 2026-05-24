@@ -1,14 +1,14 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from "react"
-import { motion, AnimatePresence } from "framer-motion"
-import Link from "next/link"
-import Image from "next/image"
-import { useRouter, usePathname } from "next/navigation"
-import { Menu, X } from "lucide-react"
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import Link from "next/link";
+import Image from "next/image";
+import { useRouter, usePathname } from "next/navigation";
+import { Menu, X } from "lucide-react";
 
 // Pages whose hero background is dark — nav should use light text even before scrolling
-const DARK_HERO_PAGES = ["/about", "/contact", "/applications"]
+const DARK_HERO_PAGES = ["/about", "/contact"];
 
 const linkVariants = {
   hidden: { opacity: 0, y: -10 },
@@ -21,7 +21,7 @@ const linkVariants = {
       ease: [0.25, 0.4, 0.25, 1],
     },
   }),
-}
+};
 
 const mobileMenuVariants = {
   hidden: { opacity: 0, height: 0 },
@@ -41,41 +41,41 @@ const mobileMenuVariants = {
       ease: [0.25, 0.4, 0.25, 1],
     },
   },
-}
+};
 
 export function Navigation() {
-  const [scrolled, setScrolled] = useState(false)
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  const router = useRouter()
-  const pathname = usePathname()
+  const [scrolled, setScrolled] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const router = useRouter();
+  const pathname = usePathname();
 
   // On dark-hero pages the nav starts over a dark background, so use light text/logo
-  const darkHero = DARK_HERO_PAGES.includes(pathname)
+  const darkHero = DARK_HERO_PAGES.includes(pathname);
   // Use light text when scrolled OR on a dark-hero page (before scrolling)
-  const useLightText = scrolled || darkHero
+  const useLightText = scrolled || darkHero;
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 50)
-    }
-    window.addEventListener("scroll", handleScroll)
-    return () => window.removeEventListener("scroll", handleScroll)
-  }, [])
+      setScrolled(window.scrollY > 50);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const scrollToSection = (id: string) => {
-    const element = document.querySelector(id)
+    const element = document.querySelector(id);
     if (element) {
-      element.scrollIntoView({ behavior: "smooth", block: "start" })
+      element.scrollIntoView({ behavior: "smooth", block: "start" });
     }
-    setMobileMenuOpen(false)
-  }
+    setMobileMenuOpen(false);
+  };
 
   const navLinks = [
     { label: "Home", href: "/", isPage: true },
     { label: "About", href: "/about", isPage: true },
     { label: "Applications", href: "/applications", isPage: true },
     { label: "Contact", href: "/contact", isPage: true },
-  ]
+  ];
 
   return (
     <motion.nav
@@ -83,7 +83,9 @@ export function Navigation() {
       animate={{ y: 0 }}
       transition={{ type: "spring", stiffness: 100, damping: 20 }}
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        scrolled ? "bg-[#121212]/95 backdrop-blur-md border-b border-white/10" : "bg-transparent"
+        scrolled
+          ? "bg-[#121212]/95 backdrop-blur-md border-b border-white/10"
+          : "bg-transparent"
       }`}
     >
       <div className="max-w-7xl mx-auto px-8 py-5 flex items-center justify-between">
@@ -107,13 +109,23 @@ export function Navigation() {
           {navLinks.map((item, i) => (
             <motion.button
               key={item.label}
-              onClick={() => item.isPage ? router.push(item.href) : scrollToSection(item.href)}
-              className={`text-base font-semibold tracking-wide transition-colors relative ${
-                useLightText ? "text-white/80 hover:text-[#CFFF5E]" : "text-[#121212]/80 hover:text-[#121212]"
+              onClick={() =>
+                item.isPage
+                  ? router.push(item.href)
+                  : scrollToSection(item.href)
+              }
+              className={`cursor-pointer text-base font-semibold tracking-wide transition-colors relative ${
+                useLightText
+                  ? "text-white/80 hover:text-[#CFFF5E]"
+                  : "text-[#121212]/80 hover:text-[#121212]"
               }`}
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: i * 0.1, duration: 0.4, ease: [0.25, 0.4, 0.25, 1] }}
+              transition={{
+                delay: i * 0.1,
+                duration: 0.4,
+                ease: [0.25, 0.4, 0.25, 1],
+              }}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
@@ -129,7 +141,7 @@ export function Navigation() {
         </div>
 
         <motion.button
-          className="hidden md:block bg-[#CFFF5E] text-[#121212] px-8 py-3.5 rounded-full font-bold text-base tracking-wide relative overflow-hidden"
+          className="cursor-pointer hidden md:block bg-[#CFFF5E] text-[#121212] px-8 py-3.5 rounded-full font-bold text-base tracking-wide relative overflow-hidden"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           transition={{ type: "spring", stiffness: 400, damping: 17 }}
@@ -144,12 +156,20 @@ export function Navigation() {
                 "0 0 20px rgba(207,255,94,0.3)",
               ],
             }}
-            transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
+            transition={{
+              duration: 2,
+              repeat: Number.POSITIVE_INFINITY,
+              ease: "easeInOut",
+            }}
           />
           <motion.div
-            className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full"
+            className="absolute inset-0 bg-linear-to-r from-transparent via-white/30 to-transparent -translate-x-full"
             animate={{ x: ["-100%", "200%"] }}
-            transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY, repeatDelay: 3 }}
+            transition={{
+              duration: 2,
+              repeat: Number.POSITIVE_INFINITY,
+              repeatDelay: 3,
+            }}
           />
           <span className="relative z-10">Join the Ecosystem</span>
         </motion.button>
@@ -178,7 +198,9 @@ export function Navigation() {
                 exit={{ rotate: -90, opacity: 0 }}
                 transition={{ duration: 0.2 }}
               >
-                <Menu className={useLightText ? "text-white" : "text-[#121212]"} />
+                <Menu
+                  className={useLightText ? "text-white" : "text-[#121212]"}
+                />
               </motion.div>
             )}
           </AnimatePresence>
@@ -198,7 +220,11 @@ export function Navigation() {
               {navLinks.map((item, i) => (
                 <motion.button
                   key={item.label}
-                  onClick={() => item.isPage ? (router.push(item.href), setMobileMenuOpen(false)) : scrollToSection(item.href)}
+                  onClick={() =>
+                    item.isPage
+                      ? (router.push(item.href), setMobileMenuOpen(false))
+                      : scrollToSection(item.href)
+                  }
                   className="block w-full text-left text-white/80 hover:text-[#CFFF5E] text-xl font-semibold py-3"
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
@@ -212,7 +238,10 @@ export function Navigation() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3 }}
-                onClick={() => { router.push("/contact"); setMobileMenuOpen(false) }}
+                onClick={() => {
+                  router.push("/contact");
+                  setMobileMenuOpen(false);
+                }}
               >
                 Join the Ecosystem
               </motion.button>
@@ -221,5 +250,5 @@ export function Navigation() {
         )}
       </AnimatePresence>
     </motion.nav>
-  )
+  );
 }
